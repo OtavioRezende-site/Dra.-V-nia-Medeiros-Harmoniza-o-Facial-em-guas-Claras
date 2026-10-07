@@ -1,6 +1,7 @@
 import React from "react";
 import { contatoData, entidade, siteConfig } from "../data/siteData";
 import { MapPin, Phone, Instagram } from "lucide-react";
+import { getAssetUrl } from "../utils/asset";
 
 interface FooterProps {
   navigate: (path: string) => void;
@@ -16,11 +17,21 @@ export function Footer({ navigate }: FooterProps) {
     <footer className="bg-[#241c16] text-[#faf8f5] border-t border-[#3d3126] mt-auto">
       <div className="max-w-[78rem] mx-auto px-5 sm:px-8 py-16 sm:py-20">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-14">
-          {/* Brand & Introduction (5 cols) */}
+          {/* Brand & Introduction (5 cols) with Monograma VM */}
           <div className="lg:col-span-5 space-y-4">
-            <span className="text-3xl font-serif-editorial font-normal tracking-tight text-[#faf8f5] block">
-              Dra. Vânia Medeiros
-            </span>
+            <div className="flex items-center gap-3.5">
+              <img
+                src={getAssetUrl("/midias/monogramas/monograma-vm-dourado.png")}
+                alt=""
+                aria-hidden="true"
+                width={42}
+                height={42}
+                className="w-10 h-10 sm:w-[42px] sm:h-[42px] object-contain shrink-0"
+              />
+              <span className="text-3xl font-serif-editorial font-normal tracking-tight text-[#faf8f5] block">
+                Dra. Vânia Medeiros
+              </span>
+            </div>
             <p className="text-sm text-[#d8c3a5] tracking-widest uppercase font-medium">
               Harmonização Orofacial · Brasília/DF
             </p>

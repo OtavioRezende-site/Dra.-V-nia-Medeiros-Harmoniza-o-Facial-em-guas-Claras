@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { rotasData, entidade } from "../data/siteData";
+import { getAssetUrl } from "../utils/asset";
 
 interface MetaTagsProps {
   path: string;
@@ -35,6 +36,10 @@ export function MetaTags({ path }: MetaTagsProps) {
       document.head.appendChild(scriptTag);
     }
 
+    const logoUrl = typeof window !== "undefined"
+      ? `${window.location.origin}${getAssetUrl("/midias/monogramas/monograma-vm-dourado.png")}`
+      : getAssetUrl("/midias/monogramas/monograma-vm-dourado.png");
+
     const schemaData = {
       "@context": "https://schema.org",
       "@graph": [
@@ -43,6 +48,7 @@ export function MetaTags({ path }: MetaTagsProps) {
           "@id": "https://www.dravaniamedeiros.com.br/#person",
           name: entidade.displayName,
           jobTitle: entidade.professionPublished,
+          image: logoUrl,
           sameAs: [entidade.instagram],
           address: {
             "@type": "PostalAddress",
@@ -60,6 +66,11 @@ export function MetaTags({ path }: MetaTagsProps) {
           name: entidade.siteBrand,
           description: route.description,
           inLanguage: entidade.language,
+          publisher: {
+            "@type": "Person",
+            name: entidade.displayName,
+            logo: logoUrl,
+          },
         },
       ],
     };

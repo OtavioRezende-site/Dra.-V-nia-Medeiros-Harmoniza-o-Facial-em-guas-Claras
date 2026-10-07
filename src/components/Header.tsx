@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
 import { siteConfig, contatoData } from "../data/siteData";
 import { ChevronDown, Menu, X, ArrowRight } from "lucide-react";
+import { getAssetUrl } from "../utils/asset";
 
 interface HeaderProps {
   currentPath: string;
@@ -104,28 +105,38 @@ export function Header({ currentPath, navigate }: HeaderProps) {
         }`}
       >
         <div className="max-w-[78rem] mx-auto px-5 sm:px-8 h-18 sm:h-20 flex items-center justify-between transition-all duration-300">
-          {/* Zone 1: Brand Wordmark */}
+          {/* Zone 1: Brand Wordmark with Monograma VM */}
           <a
             href="/"
             onClick={(e) => handleNavClick("/", e)}
-            className="flex flex-col group py-1"
+            className="flex items-center gap-2.5 sm:gap-3 group py-1 min-h-[44px]"
           >
-            <span
-              className={`text-2xl sm:text-[1.7rem] font-serif-editorial font-normal tracking-tight transition-colors leading-none ${
-                isHeroMode
-                  ? "text-white group-hover:text-[#d8c3a5]"
-                  : "text-[#2d241e] group-hover:text-[#b89660]"
-              }`}
-            >
-              Dra. Vânia Medeiros
-            </span>
-            <span
-              className={`text-[10px] sm:text-[11px] tracking-widest uppercase font-medium mt-1 transition-colors ${
-                isHeroMode ? "text-[#d8c3a5]" : "text-[#977643]"
-              }`}
-            >
-              Harmonização Orofacial · Brasília
-            </span>
+            <img
+              src={getAssetUrl("/midias/monogramas/monograma-vm-dourado.png")}
+              alt=""
+              aria-hidden="true"
+              width={34}
+              height={34}
+              className="w-7 h-7 sm:w-[34px] sm:h-[34px] object-contain shrink-0 transition-transform duration-300 group-hover:scale-105"
+            />
+            <div className="flex flex-col">
+              <span
+                className={`text-xl sm:text-[1.65rem] font-serif-editorial font-normal tracking-tight transition-colors leading-tight ${
+                  isHeroMode
+                    ? "text-white group-hover:text-[#d8c3a5]"
+                    : "text-[#2d241e] group-hover:text-[#b89660]"
+                }`}
+              >
+                Dra. Vânia Medeiros
+              </span>
+              <span
+                className={`text-[9.5px] sm:text-[10.5px] tracking-widest uppercase font-medium leading-none transition-colors ${
+                  isHeroMode ? "text-[#d8c3a5]" : "text-[#977643]"
+                }`}
+              >
+                Harmonização Orofacial · Brasília
+              </span>
+            </div>
           </a>
 
           {/* Zone 2: Desktop Navigation Links (Clean & Essential) */}
@@ -301,19 +312,29 @@ export function Header({ currentPath, navigate }: HeaderProps) {
           className="fixed inset-0 z-50 bg-[#faf8f5] flex flex-col justify-between overflow-y-auto lg:hidden"
           style={{ minHeight: "100svh" }}
         >
-          {/* Top Bar do Menu Mobile com Botão Fechar */}
+          {/* Top Bar do Menu Mobile com Botão Fechar e Monograma VM */}
           <div className="h-20 px-5 sm:px-8 flex items-center justify-between border-b border-[#e5ded5] shrink-0 bg-[#faf8f5]">
             <a
               href="/"
               onClick={(e) => handleNavClick("/", e)}
-              className="flex flex-col group py-1"
+              className="flex items-center gap-2.5 group py-1"
             >
-              <span className="text-xl sm:text-2xl font-serif-editorial font-normal tracking-tight text-[#2d241e]">
-                Dra. Vânia Medeiros
-              </span>
-              <span className="text-[10px] tracking-widest uppercase text-[#977643] font-semibold">
-                Harmonização Orofacial · Brasília
-              </span>
+              <img
+                src={getAssetUrl("/midias/monogramas/monograma-vm-dourado.png")}
+                alt=""
+                aria-hidden="true"
+                width={32}
+                height={32}
+                className="w-7 h-7 sm:w-8 sm:h-8 object-contain shrink-0"
+              />
+              <div className="flex flex-col">
+                <span className="text-xl sm:text-2xl font-serif-editorial font-normal tracking-tight text-[#2d241e] leading-tight">
+                  Dra. Vânia Medeiros
+                </span>
+                <span className="text-[10px] tracking-widest uppercase text-[#977643] font-semibold leading-none">
+                  Harmonização Orofacial · Brasília
+                </span>
+              </div>
             </a>
             <button
               type="button"
