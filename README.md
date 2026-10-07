@@ -53,7 +53,7 @@ Os dados estão centralizados em arquivos editáveis:
 
 ---
 
-## 5. Comandos de Execução
+## 5. Comandos de Execução e Deploy no GitHub Pages
 
 ```bash
 # Instalação das dependências
@@ -65,9 +65,26 @@ npm run dev
 # Verificação de tipos / lint
 npm run lint
 
-# Build de produção
+# Build de produção (gera /dist e sincroniza automaticamente a pasta /docs com .nojekyll)
 npm run build
+
+# Deploy direto no GitHub Pages (via branch gh-pages)
+npm run deploy
 ```
+
+### Como Ativar o Site no GitHub Pages (2 Opções):
+
+- **Opção 1 (Recomendada via GitHub Actions):**
+  1. Vá nas configurações do seu repositório no GitHub: **Settings** > **Pages**.
+  2. Em **Source**, selecione **GitHub Actions**.
+  3. O fluxo configurado em `.github/workflows/deploy.yml` compilará e publicará o site automaticamente a cada commit/push.
+
+- **Opção 2 (Deploy via pasta /docs):**
+  1. Execute `npm run build` no seu computador e envie o commit (`git push origin main`).
+  2. Vá em **Settings** > **Pages**.
+  3. Em **Source**, selecione **Deploy from a branch**.
+  4. Em **Branch**, selecione `main` e a pasta `/docs`, depois clique em **Save**.
+  5. O site será publicado imediatamente sem tela branca.
 
 ---
 
