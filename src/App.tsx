@@ -53,6 +53,12 @@ function resolveCurrentRoute(): string {
 
   // 3. Pathname routing (supports root domain as well as repo subfolder e.g. /repo-name/sobre/)
   let pathname = window.location.pathname;
+  try {
+    pathname = decodeURIComponent(pathname);
+  } catch {
+    // Keep raw
+  }
+
   const base = getBasePath();
   if (base && pathname.startsWith(base)) {
     pathname = pathname.slice(base.length);

@@ -13,14 +13,20 @@ const KNOWN_ROUTES = [
 export function getBasePath(): string {
   if (typeof window === "undefined") return "";
   
-  const pathname = window.location.pathname;
+  let pathname = window.location.pathname;
+  try {
+    pathname = decodeURIComponent(pathname);
+  } catch {
+    // Keep raw pathname if decoding fails
+  }
+
   const segments = pathname.split("/").filter(Boolean);
   
   if (segments.length > 0) {
     const firstSegment = segments[0];
     // If the first segment is not one of our known routes and not index.html, it's the repo/subfolder name
     if (!KNOWN_ROUTES.includes(firstSegment) && firstSegment !== "index.html") {
-      return `/${firstSegment}`;
+      return `/${segments[0]}`;
     }
   }
   

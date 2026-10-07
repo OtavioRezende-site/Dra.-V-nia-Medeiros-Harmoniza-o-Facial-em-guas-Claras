@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { casosClinicos, CasoClinico, contatoData } from "../data/siteData";
 import { ZoomIn, X, ArrowRight } from "lucide-react";
+import { getAssetUrl } from "../utils/asset";
 
 interface ResultadosGalleryProps {
   maxItems?: number;
@@ -87,7 +88,7 @@ export function ResultadosGallery({
               className="relative aspect-4/3 bg-[#f2eee8] overflow-hidden cursor-pointer"
             >
               <img
-                src={item.image}
+                src={getAssetUrl(item.image)}
                 alt={item.title}
                 className="w-full h-full object-contain p-2 group-hover:scale-[1.03] transition-transform duration-500"
                 loading="lazy"
@@ -184,7 +185,7 @@ export function ResultadosGallery({
             <div className="p-6 sm:p-8 space-y-6">
               <div className="bg-[#f2eee8] rounded-xl p-3 flex items-center justify-center border border-[#e5ded5]">
                 <img
-                  src={activeModalCase.image}
+                  src={getAssetUrl(activeModalCase.image)}
                   alt={activeModalCase.title}
                   className="max-h-[65vh] w-auto object-contain rounded-lg shadow-sm"
                 />
