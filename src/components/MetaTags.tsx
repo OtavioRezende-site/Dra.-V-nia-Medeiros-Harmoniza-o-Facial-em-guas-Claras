@@ -27,6 +27,24 @@ export function MetaTags({ path }: MetaTagsProps) {
       metaDesc.setAttribute("content", route.description);
     }
 
+    // Ensure favicon links are updated with exact base path resolution
+    const updateIcon = (rel: string, href: string, type?: string, sizes?: string) => {
+      let link = document.querySelector(`link[rel="${rel}"]${sizes ? `[sizes="${sizes}"]` : ""}`) as HTMLLinkElement;
+      if (!link) {
+        link = document.createElement("link");
+        link.rel = rel;
+        if (sizes) link.setAttribute("sizes", sizes);
+        document.head.appendChild(link);
+      }
+      if (type) link.type = type;
+      link.href = href;
+    };
+
+    updateIcon("icon", getAssetUrl("/icons/favicon-32.png"), "image/png", "32x32");
+    updateIcon("icon", getAssetUrl("/icons/favicon-96.png"), "image/png", "96x96");
+    updateIcon("shortcut icon", getAssetUrl("/icons/favicon.ico"));
+    updateIcon("apple-touch-icon", getAssetUrl("/icons/apple-touch-icon.png"), undefined, "180x180");
+
     // JSON-LD structured data for Person and WebSite
     let scriptTag = document.querySelector('script[data-schema="main-ldjson"]');
     if (!scriptTag) {

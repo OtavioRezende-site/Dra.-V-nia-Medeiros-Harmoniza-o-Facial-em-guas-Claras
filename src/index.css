@@ -30,11 +30,11 @@
     background-color: var(--surface-base);
     color: var(--ink);
     font-family: var(--font-body);
-    overflow-x: hidden;
+    overflow-x: clip;
   }
 
   body {
-    overflow-x: hidden;
+    overflow-x: clip;
     min-width: 320px;
   }
 

@@ -19,7 +19,12 @@ export function Header({ currentPath, navigate }: HeaderProps) {
   // Detect scroll to make navbar discreet on hero and solid when scrolled
   useEffect(() => {
     const handleScroll = () => {
-      setIsScrolled(window.scrollY > 30);
+      const scrollPos =
+        window.scrollY ||
+        document.documentElement.scrollTop ||
+        document.body.scrollTop ||
+        0;
+      setIsScrolled(scrollPos > 30);
     };
     handleScroll();
     window.addEventListener("scroll", handleScroll, { passive: true });
@@ -98,11 +103,12 @@ export function Header({ currentPath, navigate }: HeaderProps) {
   return (
     <>
       <header
-        className={`sticky top-0 z-40 transition-all duration-300 ${
+        className={`sticky top-0 z-40 w-full shrink-0 transition-all duration-300 ${
           isHeroMode
             ? "bg-gradient-to-b from-[#211812]/80 via-[#2a1f17]/40 to-transparent border-b border-[#c5a36c]/20 backdrop-blur-[2px] shadow-[0_4px_30px_rgba(33,24,18,0.2)]"
             : "bg-[#faf8f5]/95 backdrop-blur-md border-b border-[#e5ded5] shadow-[0_2px_15px_-4px_rgba(0,0,0,0.03)]"
         }`}
+        style={{ position: "sticky", top: 0 }}
       >
         <div className="max-w-[78rem] mx-auto px-5 sm:px-8 h-18 sm:h-20 flex items-center justify-between transition-all duration-300">
           {/* Zone 1: Brand Wordmark with Monograma VM */}
