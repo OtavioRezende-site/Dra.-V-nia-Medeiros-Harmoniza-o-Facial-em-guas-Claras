@@ -1,0 +1,29 @@
+{
+  "environment": "preview",
+  "productionOrigin": null,
+  "basePath": "/",
+  "brandPaletteStatus": "pending_instagram_verification",
+  "brandColorsFromInstagram": false,
+  "colorWeights": {
+    "base": 60,
+    "secondary": 40,
+    "accent": 10
+  },
+  "normalizedPercentages": {
+    "base": 54.55,
+    "secondary": 36.36,
+    "accent": 9.09
+  },
+  "indexable": false,
+  "resultsEnabled": false,
+  "testimonialsEnabled": false,
+  "videosEnabled": false,
+  "formEnabled": false,
+  "analyticsEnabled": false,
+  "calendarEnabled": false,
+  "crmEnabled": false,
+  "faviconStatus": "provisional_vector_vm",
+  "professionalReviewApproved": false,
+  "privacyImplementationReviewed": false,
+  "exportOnlyApprovedAssets": true
+}

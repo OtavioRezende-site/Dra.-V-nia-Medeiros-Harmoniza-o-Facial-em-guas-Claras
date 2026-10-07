@@ -1,0 +1,12 @@
+# MODELO: substituir URL_DO_SITEMAP antes de usar. Não aplicar a previews.
+User-agent: *
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+# Proposta editável: manter separadas busca e utilização para treinamento.
+User-agent: GPTBot
+Disallow: /
+
+Sitemap: URL_DO_SITEMAP

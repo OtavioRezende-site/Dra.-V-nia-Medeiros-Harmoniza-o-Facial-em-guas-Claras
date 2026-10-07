@@ -1,0 +1,32 @@
+{
+  "whatsapp": {
+    "e164": "+5561996749336",
+    "display": "(61) 99674-9336",
+    "source": "destino_dos_botoes_da_bio_e_dominio_proprio",
+    "confirmedByOwner": false
+  },
+  "conflictingDirectoryPhone": {
+    "display": "(61) 99979-4169",
+    "useOnWebsite": false
+  },
+  "messages": {
+    "geral": "Olá, Dra. Vânia! Vim pelo site e gostaria de informações sobre a avaliação.",
+    "fios": "Olá! Vim pelo site da Dra. Vânia e gostaria de informações sobre a avaliação para fios de PDO/PLLA.",
+    "fullFace": "Olá! Vim pelo site da Dra. Vânia e gostaria de conversar sobre a avaliação para Full Face.",
+    "lipoPapada": "Olá! Vim pelo site da Dra. Vânia e gostaria de informações sobre a avaliação para Lipo de Papada HD.",
+    "preenchimento": "Olá! Vim pelo site da Dra. Vânia e gostaria de conversar sobre avaliação para preenchimento facial."
+  },
+  "links": {
+    "geral": "https://wa.me/5561996749336?text=Ol%C3%A1%2C%20Dra.%20V%C3%A2nia%21%20Vim%20pelo%20site%20e%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20a%20avalia%C3%A7%C3%A3o.",
+    "fios": "https://wa.me/5561996749336?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Dra.%20V%C3%A2nia%20e%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20a%20avalia%C3%A7%C3%A3o%20para%20fios%20de%20PDO/PLLA.",
+    "fullFace": "https://wa.me/5561996749336?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Dra.%20V%C3%A2nia%20e%20gostaria%20de%20conversar%20sobre%20a%20avalia%C3%A7%C3%A3o%20para%20Full%20Face.",
+    "lipoPapada": "https://wa.me/5561996749336?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Dra.%20V%C3%A2nia%20e%20gostaria%20de%20informa%C3%A7%C3%B5es%20sobre%20a%20avalia%C3%A7%C3%A3o%20para%20Lipo%20de%20Papada%20HD.",
+    "preenchimento": "https://wa.me/5561996749336?text=Ol%C3%A1%21%20Vim%20pelo%20site%20da%20Dra.%20V%C3%A2nia%20e%20gostaria%20de%20conversar%20sobre%20avalia%C3%A7%C3%A3o%20para%20preenchimento%20facial."
+  },
+  "mapsSearchUrl": "https://www.google.com/maps/search/?api=1&query=%C3%81guas%20Claras%20Shopping%2C%20Av.%20das%20Arauc%C3%A1rias%2C%201835%2C%205%C2%BA%20andar%2C%20sala%20566%2C%20%C3%81guas%20Claras%2C%20Bras%C3%ADlia%20-%20DF%2C%2071936-250",
+  "instagram": "https://www.instagram.com/dravaniamedeiros/",
+  "email": null,
+  "openingHours": null,
+  "parking": null,
+  "accessibility": null
+}

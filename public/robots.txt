@@ -1,0 +1,3 @@
+# Ambiente de prévia: bloqueio de indexação até confirmação do domínio de produção
+User-agent: *
+Disallow: /

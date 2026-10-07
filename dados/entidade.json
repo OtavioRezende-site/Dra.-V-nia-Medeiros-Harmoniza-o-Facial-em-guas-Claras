@@ -1,0 +1,46 @@
+{
+  "displayName": "Dra. Vânia Medeiros",
+  "siteBrand": "Dra. Vânia Medeiros",
+  "language": "pt-BR",
+  "identityFocus": "pessoa_profissional",
+  "professionPublished": "Dentista",
+  "professionVerified": false,
+  "registrationCandidate": {
+    "council": "CRO-DF",
+    "number": "14743",
+    "verified": false,
+    "source": "https://lorena.ig.com.br/categoria/beleza/dra-vania-medeiros-harmonizacao-facial"
+  },
+  "instagram": "https://www.instagram.com/dravaniamedeiros/",
+  "address": {
+    "venue": "Águas Claras Shopping",
+    "street": "Av. das Araucárias",
+    "number": "1835",
+    "floor": "5º andar",
+    "room": "566",
+    "district": "Águas Claras",
+    "city": "Brasília",
+    "state": "DF",
+    "postalCode": "71936-250",
+    "country": "BR",
+    "source": "informado_pelo_usuario",
+    "ownershipOfVenueClaimed": false
+  },
+  "experienceYears": null,
+  "education": [],
+  "credentials": [],
+  "speakerRole": null,
+  "testimonials": [],
+  "historicalClaimsForVerification": [
+    {
+      "claim": "14 anos em estética e 8 anos em fios em 10/12/2025",
+      "publish": false
+    },
+    {
+      "claim": "Speaker Webpharma",
+      "publish": false
+    }
+  ],
+  "excludedClinicBrand": "Amazing HOF",
+  "notes": "Não transferir marca, história, CNPJ, equipe ou avaliações da clínica para a profissional."
+}

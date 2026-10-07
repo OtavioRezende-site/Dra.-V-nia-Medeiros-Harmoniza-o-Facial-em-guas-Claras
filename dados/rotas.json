@@ -1,0 +1,119 @@
+[
+  {
+    "path": "/",
+    "navLabel": "Início",
+    "spec": "paginas/01_INICIO.md",
+    "title": "Dra. Vânia Medeiros | Harmonização Facial em Águas Claras",
+    "description": "Conheça a Dra. Vânia Medeiros, os tratamentos apresentados e as informações para conversar sobre uma avaliação em Águas Claras, Brasília.",
+    "publicationCondition": "public_release",
+    "indexableInPreview": false
+  },
+  {
+    "path": "/sobre/",
+    "navLabel": "Sobre",
+    "spec": "paginas/02_SOBRE.md",
+    "title": "Sobre a Dra. Vânia Medeiros | Águas Claras, Brasília",
+    "description": "Conheça a apresentação profissional da Dra. Vânia Medeiros e os canais para conversar sobre seu atendimento em harmonização facial.",
+    "publicationCondition": "public_release",
+    "indexableInPreview": false
+  },
+  {
+    "path": "/tratamentos/",
+    "navLabel": "Tratamentos",
+    "spec": "paginas/03_TRATAMENTOS.md",
+    "title": "Tratamentos | Dra. Vânia Medeiros em Águas Claras",
+    "description": "Explore Fios de PDO/PLLA, Full Face, Lipo de Papada HD e preenchimento facial e saiba como iniciar uma conversa sobre avaliação.",
+    "publicationCondition": "public_release",
+    "indexableInPreview": false
+  },
+  {
+    "path": "/tratamentos/fios-de-pdo-plla/",
+    "navLabel": "Fios de PDO/PLLA",
+    "spec": "paginas/04_FIOS.md",
+    "title": "Fios de PDO/PLLA em Águas Claras | Dra. Vânia Medeiros",
+    "description": "Conheça essa frente de atendimento da Dra. Vânia e prepare perguntas sobre avaliação, planejamento e acompanhamento com fios de PDO/PLLA.",
+    "publicationCondition": "public_release",
+    "indexableInPreview": false
+  },
+  {
+    "path": "/tratamentos/full-face/",
+    "navLabel": "Full Face",
+    "spec": "paginas/05_FULL_FACE.md",
+    "title": "Full Face em Águas Claras | Dra. Vânia Medeiros",
+    "description": "Converse sobre Full Face com a Dra. Vânia Medeiros e entenda como preparar seus objetivos e perguntas para uma avaliação individual.",
+    "publicationCondition": "public_release",
+    "indexableInPreview": false
+  },
+  {
+    "path": "/tratamentos/lipo-de-papada-hd/",
+    "navLabel": "Lipo de Papada HD",
+    "spec": "paginas/06_LIPO_PAPADA.md",
+    "title": "Lipo de Papada HD em Águas Claras | Dra. Vânia Medeiros",
+    "description": "Veja informações iniciais sobre a Lipo de Papada HD apresentada pela Dra. Vânia e converse sobre a avaliação em Águas Claras.",
+    "publicationCondition": "public_release",
+    "indexableInPreview": false
+  },
+  {
+    "path": "/tratamentos/preenchimento-facial/",
+    "navLabel": "Preenchimento facial",
+    "spec": "paginas/07_PREENCHIMENTO.md",
+    "title": "Preenchimento Facial em Águas Claras | Dra. Vânia Medeiros",
+    "description": "Conheça essa frente de atendimento e converse com a Dra. Vânia sobre avaliação, objetivos e planejamento de preenchimento facial.",
+    "publicationCondition": "public_release",
+    "indexableInPreview": false
+  },
+  {
+    "path": "/experiencia-de-atendimento/",
+    "navLabel": "Atendimento",
+    "spec": "paginas/08_EXPERIENCIA.md",
+    "title": "Prepare sua avaliação | Dra. Vânia Medeiros",
+    "description": "Organize suas dúvidas, conheça os canais de contato e veja o endereço de atendimento da Dra. Vânia Medeiros em Águas Claras.",
+    "publicationCondition": "public_release",
+    "indexableInPreview": false
+  },
+  {
+    "path": "/resultados/",
+    "navLabel": "Resultados",
+    "spec": "paginas/09_RESULTADOS.md",
+    "title": "Resultados e registros | Dra. Vânia Medeiros",
+    "description": "Conheça registros autorizados de casos acompanhados pela Dra. Vânia, com contexto individual e informações sobre cada publicação.",
+    "publicationCondition": "resultsEnabled && approvedCases.length > 0",
+    "indexableInPreview": false
+  },
+  {
+    "path": "/perguntas-frequentes/",
+    "navLabel": "Dúvidas",
+    "spec": "paginas/10_PERGUNTAS_FREQUENTES.md",
+    "title": "Dúvidas sobre atendimento | Dra. Vânia Medeiros",
+    "description": "Veja respostas sobre contato, localização e preparação para uma avaliação com a Dra. Vânia Medeiros em Águas Claras.",
+    "publicationCondition": "public_release",
+    "indexableInPreview": false
+  },
+  {
+    "path": "/contato/",
+    "navLabel": "Contato",
+    "spec": "paginas/11_CONTATO.md",
+    "title": "Contato e localização | Dra. Vânia Medeiros em Águas Claras",
+    "description": "Fale com o atendimento da Dra. Vânia pelo WhatsApp e consulte o endereço no Águas Claras Shopping, 5º andar, sala 566, Brasília.",
+    "publicationCondition": "public_release",
+    "indexableInPreview": false
+  },
+  {
+    "path": "/privacidade/",
+    "navLabel": "Privacidade",
+    "spec": "paginas/12_PRIVACIDADE.md",
+    "title": "Privacidade | Dra. Vânia Medeiros",
+    "description": "Saiba como funcionam os contatos e os serviços externos disponíveis neste site.",
+    "publicationCondition": "public_release",
+    "indexableInPreview": false
+  },
+  {
+    "path": "/404.html",
+    "navLabel": "Página não encontrada",
+    "spec": "paginas/13_ERRO_404.md",
+    "title": "Página não encontrada | Dra. Vânia Medeiros",
+    "description": null,
+    "publicationCondition": "never_in_sitemap",
+    "indexableInPreview": false
+  }
+]
