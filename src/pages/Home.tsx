@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { contatoData } from "../data/siteData";
+import { getAssetUrl } from "../utils/asset";
 import {
   ChevronDown,
   ArrowRight,
@@ -75,7 +76,7 @@ export function Home({ navigate }: HomeProps) {
           preload="auto"
           className="hidden md:block absolute inset-0 w-full h-full object-cover z-0"
         >
-          <source src="/videos/hero-desktop.mp4" type="video/mp4" />
+          <source src={getAssetUrl("/videos/hero-desktop.mp4")} type="video/mp4" />
         </video>
 
         {/* VÍDEO MOBILE (Vertical 720x1280) */}
@@ -87,7 +88,7 @@ export function Home({ navigate }: HomeProps) {
           preload="auto"
           className="block md:hidden absolute inset-0 w-full h-full object-cover z-0"
         >
-          <source src="/videos/hero-mobile.mp4" type="video/mp4" />
+          <source src={getAssetUrl("/videos/hero-mobile.mp4")} type="video/mp4" />
         </video>
 
         {/* Overlays de Contraste e Elegância: Permitem visualização clara do vídeo e leitura impecável */}
@@ -283,7 +284,7 @@ export function Home({ navigate }: HomeProps) {
               <div className="relative w-full max-w-[360px]">
                 <div className="rounded-2xl overflow-hidden shadow-xl bg-white border border-[#e0d8ce]">
                   <img
-                    src="/midias/retratos/retrato-principal.png"
+                    src={getAssetUrl("/midias/retratos/retrato-principal.png")}
                     alt="Dra. Vânia Medeiros"
                     width="455"
                     height="549"

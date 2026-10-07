@@ -3,6 +3,7 @@ import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import { WhatsAppFloat } from "./components/WhatsAppFloat";
 import { MetaTags } from "./components/MetaTags";
+import { getBasePath } from "./utils/asset";
 
 // Pages
 import { Home } from "./pages/Home";
@@ -20,34 +21,78 @@ import { Resultados } from "./pages/Resultados";
 import { NotFound } from "./pages/NotFound";
 
 function normalizePath(pathname: string): string {
-  if (pathname === "" || pathname === "/") return "/";
+  if (!pathname || pathname === "" || pathname === "/") return "/";
   let p = pathname;
+  if (!p.startsWith("/")) p = "/" + p;
   if (!p.endsWith("/")) {
     p = p + "/";
   }
   return p;
 }
 
+function resolveCurrentRoute(): string {
+  if (typeof window === "undefined") return "/";
+
+  // 1. Support hash-based routing (e.g., #/sobre/ or #sobre)
+  if (window.location.hash) {
+    const rawHash = window.location.hash.replace(/^#\/?/, "");
+    const cleanHash = rawHash.split("?")[0];
+    if (cleanHash) {
+      return normalizePath(cleanHash);
+    }
+  }
+
+  // 2. Support GitHub Pages SPA redirect query (?/sobre/)
+  const search = window.location.search;
+  if (search && search.startsWith("?/")) {
+    const queryRoute = search.slice(2).split("&")[0];
+    if (queryRoute) {
+      return normalizePath(queryRoute);
+    }
+  }
+
+  // 3. Pathname routing (supports root domain as well as repo subfolder e.g. /repo-name/sobre/)
+  let pathname = window.location.pathname;
+  const base = getBasePath();
+  if (base && pathname.startsWith(base)) {
+    pathname = pathname.slice(base.length);
+  }
+
+  // Strip index.html if present
+  pathname = pathname.replace(/\/index\.html\/?$/, "");
+
+  return normalizePath(pathname);
+}
+
 export default function App() {
-  const [currentPath, setCurrentPath] = useState<string>(() =>
-    normalizePath(window.location.pathname)
-  );
+  const [currentPath, setCurrentPath] = useState<string>(resolveCurrentRoute);
 
   useEffect(() => {
     const handleLocationChange = () => {
-      const norm = normalizePath(window.location.pathname);
-      setCurrentPath(norm);
+      const resolved = resolveCurrentRoute();
+      setCurrentPath(resolved);
       window.scrollTo(0, 0);
     };
 
     window.addEventListener("popstate", handleLocationChange);
-    return () => window.removeEventListener("popstate", handleLocationChange);
+    window.addEventListener("hashchange", handleLocationChange);
+    return () => {
+      window.removeEventListener("popstate", handleLocationChange);
+      window.removeEventListener("hashchange", handleLocationChange);
+    };
   }, []);
 
   const navigate = (path: string) => {
     const normalized = normalizePath(path);
     if (normalized !== currentPath) {
-      window.history.pushState({}, "", path);
+      const base = getBasePath();
+      const targetUrl = base ? `${base}${path}` : path;
+      try {
+        window.history.pushState({}, "", targetUrl);
+      } catch {
+        // Fallback for restricted environments
+        window.location.hash = path;
+      }
       setCurrentPath(normalized);
       window.scrollTo(0, 0);
     }

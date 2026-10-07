@@ -1,6 +1,7 @@
 import { contatoData } from "../data/siteData";
 import { Breadcrumbs } from "../components/Breadcrumbs";
 import { ArrowRight, MapPin, Sparkles } from "lucide-react";
+import { getAssetUrl } from "../utils/asset";
 
 interface SobreProps {
   navigate: (path: string) => void;
@@ -20,7 +21,7 @@ export function Sobre({ navigate }: SobreProps) {
               <div className="absolute -inset-2 rounded-2xl border border-[#b89660]/30 -z-10 translate-x-2 translate-y-2 pointer-events-none" />
               <div className="rounded-2xl overflow-hidden shadow-xl bg-white border border-[#e0d8ce]">
                 <img
-                  src="/midias/retratos/retrato-principal.png"
+                  src={getAssetUrl("/midias/retratos/retrato-principal.png")}
                   alt="Dra. Vânia Medeiros"
                   width="455"
                   height="549"
