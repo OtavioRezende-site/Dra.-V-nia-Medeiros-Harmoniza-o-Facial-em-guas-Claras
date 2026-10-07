@@ -1,18 +1,52 @@
+import { useState, useEffect } from "react";
 import { contatoData } from "../data/siteData";
 
-export function WhatsAppFloat() {
+export function WhatsAppFloat({ currentPath }: { currentPath?: string }) {
+  const [isVisible, setIsVisible] = useState(true);
+
+  useEffect(() => {
+    // If on home page, hide when user is inside the Hero section to preserve 100% of hero layout
+    if (currentPath === "/") {
+      const handleScroll = () => {
+        const heroEl = document.getElementById("hero-principal");
+        if (heroEl) {
+          const rect = heroEl.getBoundingClientRect();
+          // Hide when hero takes up significant viewport portion (user is still viewing hero)
+          if (rect.bottom > 200) {
+            setIsVisible(false);
+          } else {
+            setIsVisible(true);
+          }
+        } else {
+          setIsVisible(true);
+        }
+      };
+
+      handleScroll();
+      window.addEventListener("scroll", handleScroll, { passive: true });
+      return () => window.removeEventListener("scroll", handleScroll);
+    } else {
+      setIsVisible(true);
+    }
+  }, [currentPath]);
+
+  if (!isVisible) return null;
+
   return (
     <aside
       aria-label="Atendimento rápido por WhatsApp"
-      className="fixed bottom-6 right-6 z-30"
-      style={{ paddingBottom: "env(safe-area-inset-bottom, 0px)" }}
+      className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-30 pointer-events-auto"
+      style={{
+        paddingBottom: "env(safe-area-inset-bottom, 0px)",
+        paddingRight: "env(safe-area-inset-right, 0px)",
+      }}
     >
       <a
         href={contatoData.links.geral}
         target="_blank"
         rel="noopener noreferrer"
         aria-label="Conversar com a Dra. Vânia pelo WhatsApp (abre em nova aba)"
-        className="group flex items-center gap-2.5 bg-[#b89660] text-white px-4 py-3 rounded-full shadow-xl hover:bg-[#977643] transition-all transform hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-[#b89660] focus:ring-offset-2 min-h-[44px] min-w-[44px] border border-[#c5a36c]/40"
+        className="group flex items-center gap-2.5 bg-[#b89660] text-white px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-full shadow-xl hover:bg-[#977643] transition-all transform hover:-translate-y-0.5 active:translate-y-0 focus:outline-none focus:ring-2 focus:ring-[#b89660] focus:ring-offset-2 min-h-[44px] min-w-[44px] border border-[#c5a36c]/40 touch-manipulation"
       >
         {/* Clean, accessible SVG WhatsApp icon */}
         <svg

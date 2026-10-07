@@ -30,6 +30,12 @@
     background-color: var(--surface-base);
     color: var(--ink);
     font-family: var(--font-body);
+    overflow-x: hidden;
+  }
+
+  body {
+    overflow-x: hidden;
+    min-width: 320px;
   }
 
   :focus-visible {

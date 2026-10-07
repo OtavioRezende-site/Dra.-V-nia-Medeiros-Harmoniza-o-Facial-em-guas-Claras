@@ -1,17 +1,13 @@
-import { useState } from "react";
-import { contatoData } from "../data/siteData";
+import { useState, useEffect } from "react";
+import { contatoData, casosClinicos, CasoClinico } from "../data/siteData";
 import { getAssetUrl } from "../utils/asset";
 import {
   ChevronDown,
   ArrowRight,
-  Sparkles,
   MapPin,
-  ShieldCheck,
-  Heart,
-  Clock,
-  Compass,
+  ZoomIn,
+  X,
 } from "lucide-react";
-import { ResultadosGallery } from "../components/ResultadosGallery";
 import { ClinicalJourney } from "../components/ClinicalJourney";
 import { FacialLayersExplainer } from "../components/FacialLayersExplainer";
 
@@ -21,28 +17,27 @@ interface HomeProps {
 
 export function Home({ navigate }: HomeProps) {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [activeModalCase, setActiveModalCase] = useState<CasoClinico | null>(null);
+
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setActiveModalCase(null);
+      }
+    };
+    if (activeModalCase) {
+      window.addEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "hidden";
+    }
+    return () => {
+      window.removeEventListener("keydown", handleKeyDown);
+      document.body.style.overflow = "unset";
+    };
+  }, [activeModalCase]);
 
   const toggleFaq = (index: number) => {
     setOpenFaq(openFaq === index ? null : index);
   };
-
-  const clinicPillars = [
-    {
-      icon: <Compass className="w-5 h-5 text-[#b89660]" />,
-      title: "Diagnóstico Anatômico",
-      text: "Mapeamento das camadas da face antes de qualquer intervenção, compreendendo a real origem de cada queixa.",
-    },
-    {
-      icon: <ShieldCheck className="w-5 h-5 text-[#b89660]" />,
-      title: "Biossegurança & Materiais Nobres",
-      text: "Fios de PDO/PLLA e ácido hialurônico de padrão ouro internacional com rastreabilidade completa.",
-    },
-    {
-      icon: <Heart className="w-5 h-5 text-[#b89660]" />,
-      title: "Preservação da Sua Expressão",
-      text: "Nosso objetivo é que ninguém perceba que você fez um procedimento, apenas notem o seu semblante descansado e harmônico.",
-    },
-  ];
 
   const faqs = [
     {
@@ -195,42 +190,145 @@ export function Home({ navigate }: HomeProps) {
         </div>
       </section>
 
-      {/* 2. PILARES DE SEGURANÇA E CONFIANÇA */}
-      <section className="bg-[#f2eee8] py-14 sm:py-16 border-b border-[#e5ded5]">
+      {/* 2. COMPOSIÇÃO EDITORIAL: FRASE DE POSICIONAMENTO E PRINCÍPIOS CLÍNICOS */}
+      <section className="bg-[#faf7f2] py-18 sm:py-24 border-b border-[#e8dfd5]">
         <div className="max-w-[78rem] mx-auto px-5 sm:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {clinicPillars.map((p, idx) => (
-              <div
-                key={idx}
-                className="bg-white p-8 rounded-2xl border border-[#e0d8ce] shadow-xs hover:border-[#b89660]/50 transition-colors space-y-3"
-              >
-                <div className="w-12 h-12 rounded-xl bg-[#f7f2ea] flex items-center justify-center mb-4 border border-[#b89660]/20">
-                  {p.icon}
-                </div>
-                <h3 className="text-xl font-serif-editorial font-semibold text-[#2d241e]">
-                  {p.title}
-                </h3>
-                <p className="text-sm text-[#6b5d50] leading-relaxed">
-                  {p.text}
-                </p>
-              </div>
-            ))}
+          {/* Frase de Posicionamento em Destaque */}
+          <div className="max-w-4xl mb-14 sm:mb-18">
+            <span className="text-xs uppercase tracking-widest text-[#82622f] font-semibold block mb-4">
+              Princípios Fundamentais
+            </span>
+            <h2 className="text-2xl sm:text-3xl lg:text-[2.25rem] font-serif-editorial font-normal text-[#2d241e] leading-[1.28] tracking-tight">
+              A harmonia facial duradoura não nasce do excesso de produto, mas da
+              precisão do diagnóstico anatômico e do respeito absoluto à identidade
+              de cada expressão.
+            </h2>
+          </div>
+
+          {/* Três princípios curtos com tipografia refinada e divisórias discretas (sem cartões, sombras ou caixas) */}
+          <div className="border-t border-[#e0d7cb] pt-10 grid grid-cols-1 md:grid-cols-3 gap-10 md:gap-12">
+            <div className="space-y-3">
+              <span className="text-xs font-mono font-medium text-[#82622f] tracking-wider block">
+                01 / DIAGNÓSTICO
+              </span>
+              <h3 className="text-xl font-serif-editorial font-medium text-[#2d241e]">
+                Diagnóstico Anatômico
+              </h3>
+              <p className="text-sm text-[#4a3e35] leading-relaxed font-light">
+                Mapeamento detalhado dos planos teciduais antes de qualquer intervenção,
+                compreendendo a real origem biomecânica de cada queixa.
+              </p>
+            </div>
+
+            <div className="border-t md:border-t-0 md:border-l border-[#e0d7cb] pt-8 md:pt-0 md:pl-10 space-y-3">
+              <span className="text-xs font-mono font-medium text-[#82622f] tracking-wider block">
+                02 / BIOSSEGURANÇA
+              </span>
+              <h3 className="text-xl font-serif-editorial font-medium text-[#2d241e]">
+                Biomateriais & Rastreabilidade
+              </h3>
+              <p className="text-sm text-[#4a3e35] leading-relaxed font-light">
+                Fios de PDO/PLLA e ácido hialurônico com certificação Anvisa,
+                elevada pureza biológica e rastreabilidade individual completa.
+              </p>
+            </div>
+
+            <div className="border-t md:border-t-0 md:border-l border-[#e0d7cb] pt-8 md:pt-0 md:pl-10 space-y-3">
+              <span className="text-xs font-mono font-medium text-[#82622f] tracking-wider block">
+                03 / NATURALIDADE
+              </span>
+              <h3 className="text-xl font-serif-editorial font-medium text-[#2d241e]">
+                Preservação da Sua Expressão
+              </h3>
+              <p className="text-sm text-[#4a3e35] leading-relaxed font-light">
+                Nosso propósito é que ninguém aponte um procedimento realizado, mas
+                perceba o frescor, o repouso e a elegância serena do seu rosto.
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 3. A JORNADA DO PACIENTE: O PROCESSO CLÍNICO PASSO A PASSO */}
-      <section id="jornada-clinica" className="py-18 sm:py-28 border-b border-[#e5ded5]">
+      {/* 3. APRESENTAÇÃO DA DRA. VÂNIA MEDEIROS (COMPARTILHA O MARFIM INICIAL) */}
+      <section className="bg-[#faf7f2] py-18 sm:py-26 border-b border-[#e5ddd2]">
         <div className="max-w-[78rem] mx-auto px-5 sm:px-8">
-          <div className="max-w-3xl mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f7f2ea] text-[#977643] text-xs font-semibold uppercase tracking-wider mb-3 border border-[#b89660]/30">
-              <Sparkles size={13} />
-              <span>O Método Dra. Vânia Medeiros</span>
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
+            {/* Fotografia real em tamanho expressivo sem aparência de cartão */}
+            <div className="lg:col-span-5 flex justify-center lg:justify-start">
+              <div className="w-full max-w-[420px]">
+                <div className="bg-[#ede6dc] overflow-hidden border border-[#ded5c8]">
+                  <img
+                    src={getAssetUrl("/midias/retratos/retrato-principal.png")}
+                    alt="Dra. Vânia Medeiros"
+                    width={455}
+                    height={549}
+                    className="w-full h-auto object-contain block"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="mt-3 flex items-center justify-between text-xs text-[#615346] font-light">
+                  <span className="font-serif-editorial text-sm text-[#2d241e]">Dra. Vânia Medeiros</span>
+                  <span>Águas Claras, Brasília</span>
+                </div>
+              </div>
             </div>
+
+            {/* Conteúdo editorial ao lado */}
+            <div className="lg:col-span-7 space-y-6">
+              <div className="space-y-3">
+                <span className="text-xs uppercase tracking-widest text-[#82622f] font-semibold block">
+                  A Profissional
+                </span>
+                <h2 className="text-3xl sm:text-4xl lg:text-[2.6rem] font-serif-editorial font-normal text-[#2d241e] leading-[1.2] tracking-tight">
+                  Cuidado individual, olhar anatômico e escuta atenta
+                </h2>
+              </div>
+
+              <div className="space-y-4 text-base sm:text-lg leading-relaxed font-light">
+                <p className="text-[#2d241e] font-normal">
+                  A condução de cada atendimento pela Dra. Vânia Medeiros parte de uma premissa clara: a harmonia duradoura exige respeito absoluto à anatomia e aos traços autênticos de cada paciente.
+                </p>
+                <p className="text-[#4a3e35]">
+                  Na consulta de avaliação, o exame clínico detalhado analisa a dinâmica muscular, o suporte ósseo, as proporções da face e a resposta tecidual. Nenhum plano é genérico: cada intervenção é indicada apenas quando há real benefício para a naturalidade e o equilíbrio da sua expressão.
+                </p>
+                <p className="text-sm sm:text-base text-[#5c4e42]">
+                  Com atendimento privativo no Águas Claras Shopping em Brasília, cada encontro é conduzido com tempo dedicado para ouvir suas expectativas, esclarecer todas as dúvidas e construir um planejamento transparente e consciente.
+                </p>
+              </div>
+
+              <div className="pt-2 border-t border-[#e0d7cb] flex flex-wrap items-center gap-6">
+                <a
+                  href="/sobre/"
+                  onClick={(e) => {
+                    e.preventDefault();
+                    navigate("/sobre/");
+                  }}
+                  className="inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#82622f] hover:text-[#2d241e] transition-colors group cursor-pointer"
+                >
+                  <span>Conhecer mais sobre a Dra. Vânia</span>
+                  <ArrowRight size={15} className="group-hover:translate-x-1 transition-transform" />
+                </a>
+
+                <span className="text-xs text-[#615346] font-light">
+                  Consultas presenciais individuais com horário marcado
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* 4. A JORNADA DO PACIENTE: CONEXÃO VISUAL EM AREIA SUAVE */}
+      <section id="jornada-clinica" className="bg-[#f1ebe1] py-18 sm:py-28">
+        <div className="max-w-[78rem] mx-auto px-5 sm:px-8">
+          <div className="max-w-3xl mb-12 sm:mb-16">
+            <span className="text-xs uppercase tracking-widest text-[#82622f] font-semibold block mb-3">
+              O Método Dra. Vânia Medeiros
+            </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif-editorial font-normal text-[#2d241e] leading-tight mb-4">
-              Como cuidamos de você: a história de cada atendimento
+              Um cuidado pensado para você
             </h2>
-            <p className="text-base sm:text-lg text-[#6b5d50] leading-relaxed font-light">
+            <p className="text-base sm:text-lg text-[#4a3e35] leading-relaxed font-light max-w-2xl">
               Não tratamos procedimentos estéticos como mercadorias em uma
               prateleira. Conheça as 5 etapas do nosso protocolo clínico — desde a
               primeira conversa até o acompanhamento pós-procedimento.
@@ -242,125 +340,237 @@ export function Home({ navigate }: HomeProps) {
         </div>
       </section>
 
-      {/* 4. DIDÁTICA ANATÔMICA: COMO CADA TÉCNICA ATUA NAS CAMADAS DA FACE */}
-      <section className="bg-[#f2eee8] py-18 sm:py-28 border-b border-[#e5ded5]">
+      {/* TRANSIÇÃO SUTIL DE ATMOSFERA: Areia Suave para Taupe Profundo */}
+      <div className="h-6 sm:h-8 bg-gradient-to-b from-[#f1ebe1] to-[#362d26]" aria-hidden="true" />
+
+      {/* 5. SEÇÃO ESPECIAL DE FILOSOFIA ANATÔMICA: TAUPE PROFUNDO */}
+      <section className="bg-[#362d26] py-18 sm:py-28 text-[#faf6f0]">
         <div className="max-w-[78rem] mx-auto px-5 sm:px-8">
           <FacialLayersExplainer
+            theme="deep"
             onSelectTreatment={(path) => navigate(path)}
           />
         </div>
       </section>
 
-      {/* 5. A PROVA VIVA DO PROCESSO: CASOS CLÍNICOS REAIS */}
-      <section className="bg-[#ffffff] py-18 sm:py-28 border-b border-[#e5ded5]">
+      {/* TRANSIÇÃO SUTIL DE ATMOSFERA: Taupe Profundo para Marfim */}
+      <div className="h-6 sm:h-8 bg-gradient-to-b from-[#362d26] to-[#faf7f2]" aria-hidden="true" />
+
+      {/* 6. A PROVA VIVA DO PROCESSO: RETORNO AO MARFIM PARA LEITURA PRECISA DAS IMAGENS */}
+      <section className="bg-[#faf7f2] py-20 sm:py-28 border-b border-[#e5ddd2]">
         <div className="max-w-[78rem] mx-auto px-5 sm:px-8">
-          <div className="max-w-3xl mb-12">
-            <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f7f2ea] text-[#977643] text-xs font-semibold uppercase tracking-wider mb-3 border border-[#b89660]/30">
-              <span>Evidência Clínica</span>
-            </div>
+          <div className="max-w-3xl mb-16 sm:mb-20">
+            <span className="text-xs uppercase tracking-widest text-[#82622f] font-semibold block mb-3">
+              Registros Clínicos Reais
+            </span>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif-editorial font-normal text-[#2d241e] leading-tight mb-4">
-              Resultados que refletem o método
+              Cada resultado reflete um planejamento individual
             </h2>
-            <p className="text-base sm:text-lg text-[#6b5d50] leading-relaxed font-light">
-              A verdadeira comprovação de um processo rigoroso está nas
-              transformações sutis e elegantes dos nossos pacientes. Veja
-              registros documentados de casos reais:
+            <p className="text-base sm:text-lg text-[#4a3e35] leading-relaxed font-light">
+              Transformações autênticas documentadas em consultório. Não há fórmulas
+              padronizadas: cada plano de cuidado respeita rigorosamente a anatomia,
+              a proporção e a identidade de cada paciente.
             </p>
           </div>
 
-          <ResultadosGallery
-            maxItems={6}
-            showFilters={true}
-            onViewAll={() => navigate("/resultados/")}
-          />
-        </div>
-      </section>
+          {/* DOIS CASOS SELECIONADOS EM COMPOSIÇÃO AMPLA SEM CARTÃO EXTERNO */}
+          <div className="space-y-20 lg:space-y-28">
+            {/* Caso 1: Imagem à esquerda e texto à direita */}
+            {casosClinicos.find((c) => c.id === "caso-27") && (() => {
+              const case1 = casosClinicos.find((c) => c.id === "caso-27")!;
+              return (
+                <article className="border-b border-[#e0d7cb] pb-20 lg:pb-28">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+                    {/* Imagem à esquerda */}
+                    <div className="lg:col-span-7">
+                      <div
+                        onClick={() => setActiveModalCase(case1)}
+                        className="group relative cursor-pointer bg-[#ede6dc] overflow-hidden border border-[#ded5c8]"
+                      >
+                        <img
+                          src={getAssetUrl(case1.image)}
+                          alt={`Registro clínico: ${case1.title}`}
+                          className="w-full h-auto max-h-[560px] object-contain mx-auto block group-hover:scale-[1.015] transition-transform duration-500"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-[#2d241e]/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-[#2d241e]/90 text-white text-xs font-light tracking-wide shadow-md border border-[#c5a36c]/40">
+                            <ZoomIn size={14} className="text-[#c5a36c]" />
+                            <span>Ampliar fotografia</span>
+                          </span>
+                        </div>
+                      </div>
+                      <div className="mt-2.5 flex items-center justify-between text-[11px] text-[#615346]">
+                        <span>Registro fotográfico documentado</span>
+                        <button
+                          type="button"
+                          onClick={() => setActiveModalCase(case1)}
+                          className="text-[#82622f] hover:text-[#2d241e] font-medium inline-flex items-center gap-1 cursor-pointer focus-visible:outline-none"
+                        >
+                          <ZoomIn size={12} />
+                          <span>Ampliar fotografia</span>
+                        </button>
+                      </div>
+                    </div>
 
-      {/* 6. SOBRE A PROFISSIONAL & O ESPAÇO */}
-      <section className="bg-[#faf8f5] py-18 sm:py-26 border-b border-[#e5ded5]">
-        <div className="max-w-[78rem] mx-auto px-5 sm:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-5 flex justify-center">
-              <div className="relative w-full max-w-[360px]">
-                <div className="rounded-2xl overflow-hidden shadow-xl bg-white border border-[#e0d8ce]">
-                  <img
-                    src={getAssetUrl("/midias/retratos/retrato-principal.png")}
-                    alt="Dra. Vânia Medeiros"
-                    width="455"
-                    height="549"
-                    className="w-full h-auto object-cover"
-                    loading="lazy"
-                  />
-                  <div className="p-5 bg-[#f2eee8] border-t border-[#e0d8ce]">
-                    <p className="font-serif-editorial text-xl text-[#2d241e]">
-                      Dra. Vânia Medeiros
-                    </p>
-                    <p className="text-xs text-[#977643] font-semibold mt-0.5 uppercase tracking-wide">
-                      Responsável Técnica · Águas Claras, Brasília
-                    </p>
+                    {/* Texto à direita */}
+                    <div className="lg:col-span-5 space-y-5">
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-3">
+                          <span className="font-serif-editorial text-xs text-[#82622f] tracking-wider font-semibold">
+                            CASO 01
+                          </span>
+                          <span className="w-6 h-px bg-[#d5cbbe]"></span>
+                          <span className="text-xs tracking-wider text-[#5c4e42] uppercase">
+                            {case1.category}
+                          </span>
+                        </div>
+                        <h3 className="text-2xl sm:text-3xl font-serif-editorial font-normal text-[#2d241e] leading-snug">
+                          {case1.title}
+                        </h3>
+                      </div>
+
+                      <div className="space-y-2 pt-1">
+                        <p className="text-xs uppercase tracking-widest text-[#82622f] font-semibold">
+                          Objetivo do planejamento
+                        </p>
+                        <p className="text-base text-[#2d241e] font-light leading-relaxed">
+                          {case1.description}
+                        </p>
+                      </div>
+
+                      <div className="pt-2 border-t border-[#e0d7cb] space-y-1.5">
+                        <p className="text-xs uppercase tracking-widest text-[#5c4e42] font-semibold">
+                          Observações anatômicas
+                        </p>
+                        <p className="text-sm text-[#4a3e35] font-light leading-relaxed">
+                          {case1.notes}
+                        </p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            </div>
+                </article>
+              );
+            })()}
 
-            <div className="lg:col-span-7 space-y-6">
-              <span className="text-xs uppercase tracking-widest text-[#977643] font-semibold block">
-                Dedicação & Ética
-              </span>
-              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif-editorial font-normal text-[#2d241e] leading-tight">
-                Um olhar refinado para a sua individualidade
-              </h2>
-              <p className="text-lg text-[#2d241e] font-light leading-relaxed">
-                A Dra. Vânia Medeiros conduz seu consultório pautada na
-                honestidade diagnóstica. Antes de indicar qualquer tratamento, é
-                fundamental avaliar a saúde tecidual e esclarecer exatamente o que
-                pode ser alcançado com segurança.
-              </p>
-              <p className="text-base text-[#6b5d50] leading-relaxed font-light">
-                O ambiente no Águas Claras Shopping foi estruturado para garantir
-                sua privacidade e tranquilidade durante todas as etapas do
-                atendimento.
-              </p>
+            {/* Caso 2: Imagem à direita e texto à esquerda (disposição invertida) */}
+            {casosClinicos.find((c) => c.id === "caso-28") && (() => {
+              const case2 = casosClinicos.find((c) => c.id === "caso-28")!;
+              return (
+                <article className="border-b border-[#e0d7cb] pb-20 lg:pb-28">
+                  <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-14 items-center">
+                    {/* Imagem à direita em desktop (col-span-7, order-1 em mobile, order-2 em desktop) */}
+                    <div className="lg:col-span-7 lg:order-2">
+                      <div
+                        onClick={() => setActiveModalCase(case2)}
+                        className="group relative cursor-pointer bg-[#ede6dc] overflow-hidden border border-[#ded5c8]"
+                      >
+                        <img
+                          src={getAssetUrl(case2.image)}
+                          alt={`Registro clínico: ${case2.title}`}
+                          className="w-full h-auto max-h-[560px] object-contain mx-auto block group-hover:scale-[1.015] transition-transform duration-500"
+                          loading="lazy"
+                        />
+                        <div className="absolute inset-0 bg-[#2d241e]/25 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center pointer-events-none">
+                          <span className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-[#2d241e]/90 text-white text-xs font-light tracking-wide shadow-md border border-[#c5a36c]/40">
+                            <ZoomIn size={14} className="text-[#c5a36c]" />
+                            <span>Ampliar fotografia</span>
+                          </span>
+                        </div>
+                      </div>
+                      <div className="mt-2.5 flex items-center justify-between text-[11px] text-[#615346]">
+                        <span>Registro fotográfico documentado</span>
+                        <button
+                          type="button"
+                          onClick={() => setActiveModalCase(case2)}
+                          className="text-[#82622f] hover:text-[#2d241e] font-medium inline-flex items-center gap-1 cursor-pointer focus-visible:outline-none"
+                        >
+                          <ZoomIn size={12} />
+                          <span>Ampliar fotografia</span>
+                        </button>
+                      </div>
+                    </div>
 
-              <div className="pt-2 flex flex-wrap gap-4">
-                <a
-                  href="/sobre/"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    navigate("/sobre/");
-                  }}
-                  className="inline-flex items-center justify-center px-6 py-3.5 text-sm font-semibold text-white bg-[#b89660] hover:bg-[#977643] rounded-xl transition-colors shadow-sm min-h-[44px]"
-                >
-                  Conhecer mais sobre a Dra. Vânia
-                </a>
-                <a
-                  href="/experiencia-de-atendimento/"
-                  onClick={(e) => {
-                    e.preventDefault();
-                    navigate("/experiencia-de-atendimento/");
-                  }}
-                  className="inline-flex items-center justify-center px-6 py-3.5 text-sm font-semibold text-[#2d241e] bg-white border border-[#b89660]/40 hover:bg-[#f7f2ea] hover:text-[#977643] rounded-xl transition-colors min-h-[44px]"
-                >
-                  Ver protocolo de consulta
-                </a>
-              </div>
-            </div>
+                    {/* Texto à esquerda em desktop (col-span-5, order-2 em mobile, order-1 em desktop) */}
+                    <div className="lg:col-span-5 lg:order-1 space-y-5">
+                      <div className="space-y-2">
+                        <div className="flex items-center gap-3">
+                          <span className="font-serif-editorial text-xs text-[#82622f] tracking-wider font-semibold">
+                            CASO 02
+                          </span>
+                          <span className="w-6 h-px bg-[#d5cbbe]"></span>
+                          <span className="text-xs tracking-wider text-[#5c4e42] uppercase">
+                            {case2.category}
+                          </span>
+                        </div>
+                        <h3 className="text-2xl sm:text-3xl font-serif-editorial font-normal text-[#2d241e] leading-snug">
+                          {case2.title}
+                        </h3>
+                      </div>
+
+                      <div className="space-y-2 pt-1">
+                        <p className="text-xs uppercase tracking-widest text-[#82622f] font-semibold">
+                          Objetivo do planejamento
+                        </p>
+                        <p className="text-base text-[#2d241e] font-light leading-relaxed">
+                          {case2.description}
+                        </p>
+                      </div>
+
+                      <div className="pt-2 border-t border-[#e0d7cb] space-y-1.5">
+                        <p className="text-xs uppercase tracking-widest text-[#5c4e42] font-semibold">
+                          Observações anatômicas
+                        </p>
+                        <p className="text-sm text-[#4a3e35] font-light leading-relaxed">
+                          {case2.notes}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </article>
+              );
+            })()}
           </div>
+
+          {/* LINK PRINCIPAL / AÇÃO SECUNDÁRIA: DIFERENCIADO DA AÇÃO PRINCIPAL */}
+          <div className="mt-14 sm:mt-18 text-center">
+            <a
+              href="/resultados/"
+              onClick={(e) => {
+                e.preventDefault();
+                navigate("/resultados/");
+              }}
+              className="inline-flex items-center gap-2.5 px-8 py-4 text-xs uppercase tracking-widest font-semibold text-[#2d241e] hover:text-[#faf7f2] border border-[#2d241e] hover:bg-[#2d241e] bg-transparent transition-colors group cursor-pointer focus-visible:outline-none"
+            >
+              <span>Conhecer outros casos</span>
+              <ArrowRight
+                size={15}
+                className="group-hover:translate-x-1 transition-transform"
+              />
+            </a>
+          </div>
+
+          {/* OBSERVAÇÃO LEGÍVEL SOBRE INDIVIDUALIDADE DOS RESULTADOS */}
+          <p className="text-xs text-[#615346] text-center max-w-2xl mx-auto mt-8 font-light leading-relaxed">
+            * Registros documentados de atendimentos reais. Os resultados variam de
+            acordo com as particularidades anatômicas de cada pessoa e dependem de
+            avaliação e planejamento clínico prévio.
+          </p>
         </div>
       </section>
 
-      {/* 7. DÚVIDAS ESCLARECIDAS */}
-      <section className="bg-[#f2eee8] py-16 sm:py-24 border-b border-[#e5ded5]">
+      {/* 7. DÚVIDAS ESCLARECIDAS (COMPARTILHA O MARFIM COM CASOS PARA EVITAR ALTERNÂNCIA MECÂNICA) */}
+      <section className="bg-[#faf7f2] py-16 sm:py-24">
         <div className="max-w-[78rem] mx-auto px-5 sm:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
             <div className="lg:col-span-5 space-y-4">
-              <span className="text-xs uppercase tracking-widest text-[#977643] font-semibold block">
+              <span className="text-xs uppercase tracking-widest text-[#82622f] font-semibold block">
                 Transparência
               </span>
               <h2 className="text-3xl sm:text-4xl font-serif-editorial font-normal text-[#2d241e]">
                 Perguntas Frequentes
               </h2>
-              <p className="text-base text-[#6b5d50] leading-relaxed">
+              <p className="text-base text-[#4a3e35] leading-relaxed font-light">
                 Entenda como trabalhamos e tire suas dúvidas sobre segurança,
                 conforto e planejamento.
               </p>
@@ -371,10 +581,10 @@ export function Home({ navigate }: HomeProps) {
                     e.preventDefault();
                     navigate("/perguntas-frequentes/");
                   }}
-                  className="inline-flex items-center gap-1.5 text-sm font-semibold text-[#b89660] hover:text-[#977643]"
+                  className="inline-flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wider text-[#82622f] hover:text-[#2d241e] transition-colors group cursor-pointer focus-visible:outline-none"
                 >
                   <span>Ver todas as perguntas respondidas</span>
-                  <ArrowRight size={15} />
+                  <ArrowRight size={14} className="group-hover:translate-x-0.5 transition-transform" />
                 </a>
               </div>
             </div>
@@ -383,24 +593,24 @@ export function Home({ navigate }: HomeProps) {
               {faqs.map((faq, idx) => (
                 <div
                   key={idx}
-                  className="bg-white rounded-xl border border-[#e0d8ce] p-6 shadow-2xs"
+                  className="bg-[#ffffff] rounded-xl border border-[#ded5c8] p-6 shadow-2xs transition-colors hover:border-[#c5a36c]/60"
                 >
                   <button
                     type="button"
                     onClick={() => toggleFaq(idx)}
                     aria-expanded={openFaq === idx}
-                    className="w-full flex items-center justify-between text-left text-base sm:text-lg font-medium text-[#2d241e] hover:text-[#b89660] transition-colors focus:outline-none cursor-pointer"
+                    className="w-full flex items-center justify-between text-left text-base sm:text-lg font-medium text-[#2d241e] hover:text-[#82622f] transition-colors focus:outline-none cursor-pointer"
                   >
                     <span>{faq.q}</span>
                     <ChevronDown
                       size={18}
-                      className={`text-[#b89660] transition-transform duration-200 shrink-0 ml-4 ${
+                      className={`text-[#82622f] transition-transform duration-200 shrink-0 ml-4 ${
                         openFaq === idx ? "rotate-180" : ""
                       }`}
                     />
                   </button>
                   {openFaq === idx && (
-                    <div className="pt-3 text-sm sm:text-base text-[#6b5d50] leading-relaxed border-t border-[#f2eee8] mt-3">
+                    <div className="pt-3 text-sm sm:text-base text-[#4a3e35] leading-relaxed border-t border-[#f1ebe1] mt-3 font-light">
                       {faq.a}
                     </div>
                   )}
@@ -411,57 +621,156 @@ export function Home({ navigate }: HomeProps) {
         </div>
       </section>
 
-      {/* 8. CONTATO & AGENDAMENTO DA JORNADA */}
-      <section className="bg-[#faf8f5] py-18 sm:py-26">
-        <div className="max-w-[78rem] mx-auto px-5 sm:px-8">
-          <div className="bg-[#ffffff] rounded-3xl border border-[#e0d8ce] p-8 sm:p-14 shadow-xl">
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-              <div className="lg:col-span-7 space-y-5">
-                <span className="text-xs uppercase tracking-widest text-[#977643] font-semibold block">
-                  Seu Próximo Passo
-                </span>
-                <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif-editorial font-normal text-[#2d241e]">
-                  Pronta(o) para iniciar sua conversa de avaliação?
-                </h2>
-                <p className="text-base sm:text-lg text-[#6b5d50] leading-relaxed max-w-xl font-light">
-                  A equipe de atendimento da Dra. Vânia está à disposição no
-                  WhatsApp para explicar os horários disponíveis e orientar sua
-                  chegada no Águas Claras Shopping.
-                </p>
-                <div className="pt-2 text-sm text-[#3d3228] space-y-1">
-                  <p className="font-semibold text-base text-[#2d241e]">
-                    Águas Claras Shopping
-                  </p>
-                  <p className="text-[#6b5d50]">
-                    Av. das Araucárias, 1835 · 5º andar · Sala 566<br />
-                    Águas Claras · Brasília/DF · CEP 71936-250
-                  </p>
-                </div>
-              </div>
+      {/* TRANSIÇÃO SUTIL DE ATMOSFERA: Marfim para Encerramento Marrom */}
+      <div className="h-6 sm:h-8 bg-gradient-to-b from-[#faf7f2] to-[#2e241d]" aria-hidden="true" />
 
-              <div className="lg:col-span-5 flex flex-col gap-4">
-                <a
-                  href={contatoData.links.geral}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-white bg-[#b89660] hover:bg-[#977643] rounded-xl shadow-md transition-all transform hover:-translate-y-0.5 active:translate-y-0 min-h-[52px]"
-                >
-                  <span>Conversar no WhatsApp</span>
-                  <ArrowRight size={17} />
-                </a>
-                <a
-                  href={contatoData.mapsSearchUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full flex items-center justify-center px-8 py-4 text-sm font-semibold text-[#2d241e] bg-white border border-[#b89660]/40 hover:bg-[#f7f2ea] hover:text-[#977643] rounded-xl transition-colors min-h-[52px]"
-                >
-                  Ver rota no Google Maps
-                </a>
+      {/* 8. CONTATO & AGENDAMENTO - ENCERRAMENTO VISUAL COESO EM MARROM */}
+      <section className="bg-[#2e241d] py-20 sm:py-28 text-[#faf6f0]">
+        <div className="max-w-[78rem] mx-auto px-5 sm:px-8">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-start">
+            {/* Lado 1: Texto e Endereço */}
+            <div className="lg:col-span-7 space-y-6">
+              <span className="text-xs uppercase tracking-widest text-[#d4ba90] font-semibold block">
+                Atendimento Privativo
+              </span>
+              <h2 className="text-3xl sm:text-4xl lg:text-5xl font-serif-editorial font-normal text-[#faf6f0] leading-tight">
+                Vamos conversar sobre você?
+              </h2>
+              <p className="text-base sm:text-lg text-[#ded4c8] leading-relaxed max-w-xl font-light">
+                A equipe de atendimento da Dra. Vânia está à disposição no
+                WhatsApp para esclarecer dúvidas preliminares, apresentar os horários
+                disponíveis e orientar sua chegada ao Águas Claras Shopping com total
+                tranquilidade e discrição.
+              </p>
+
+              <div className="pt-6 border-t border-[#483b30] max-w-lg space-y-1">
+                <p className="font-serif-editorial text-lg text-[#faf6f0]">
+                  Águas Claras Shopping
+                </p>
+                <p className="text-sm text-[#ded4c8] leading-relaxed font-light">
+                  Av. das Araucárias, 1835 · 5º andar · Sala 566<br />
+                  Águas Claras · Brasília/DF · CEP 71936-250
+                </p>
+                <p className="text-xs text-[#d4ba90] font-medium pt-1">
+                  Atendimento privativo com horário marcado. Estacionamento coberto no local.
+                </p>
               </div>
+            </div>
+
+            {/* Lado 2: Ações com Hierarquia Clara (Ação Principal vs Ação Secundária) */}
+            <div className="lg:col-span-5 flex flex-col gap-4 lg:pt-8">
+              {/* Ação Principal: Dourado */}
+              <a
+                href={contatoData.links.geral}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex items-center justify-center gap-2.5 px-8 py-4 text-base font-semibold text-white bg-[#b89660] hover:bg-[#a6834d] shadow-sm transition-all transform hover:-translate-y-0.5 active:translate-y-0 rounded-xl min-h-[52px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c5a36c] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2e241d]"
+              >
+                <span>Conversar no WhatsApp</span>
+                <ArrowRight size={17} />
+              </a>
+
+              {/* Ação Secundária: Contorno sobre fundo escuro */}
+              <a
+                href={contatoData.mapsSearchUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex items-center justify-center px-8 py-4 text-sm font-semibold text-[#faf6f0] bg-[#3a2f26]/60 border border-[#5a483a] hover:bg-[#3a2f26] hover:border-[#b89660] transition-colors rounded-xl min-h-[52px] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[#c5a36c] focus-visible:ring-offset-2 focus-visible:ring-offset-[#2e241d]"
+              >
+                Ver localização no Google Maps
+              </a>
+              <p className="text-xs text-[#b8a99a] text-center pt-1 font-light">
+                Consultas presenciais e planos de tratamento individualizados.
+              </p>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Modal Lightbox de Ampliação na Home */}
+      {activeModalCase && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          className="fixed inset-0 z-50 bg-[#1c1612]/90 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6 overflow-y-auto animate-in fade-in duration-200"
+          onClick={() => setActiveModalCase(null)}
+        >
+          <div
+            className="relative bg-[#ffffff] max-w-4xl w-full border border-[#ded5c8] shadow-2xl my-auto overflow-hidden"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Topbar */}
+            <div className="px-6 py-4 bg-[#faf7f2] border-b border-[#ded5c8] flex items-center justify-between">
+              <div>
+                <span className="text-[11px] uppercase tracking-widest font-semibold text-[#82622f]">
+                  {activeModalCase.category}
+                </span>
+                <h3 className="text-xl sm:text-2xl font-serif-editorial text-[#2d241e]">
+                  {activeModalCase.title}
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveModalCase(null)}
+                aria-label="Fechar ampliação"
+                className="p-2 text-[#5c4e42] hover:text-[#2d241e] hover:bg-[#ede6dc] transition-colors cursor-pointer rounded-lg focus-visible:outline-none"
+              >
+                <X size={22} />
+              </button>
+            </div>
+
+            {/* Imagem sem corte */}
+            <div className="p-4 sm:p-8 space-y-6">
+              <div className="bg-[#ede6dc] p-2 sm:p-4 flex items-center justify-center border border-[#ded5c8]">
+                <img
+                  src={getAssetUrl(activeModalCase.image)}
+                  alt={activeModalCase.title}
+                  className="max-h-[62vh] w-auto max-w-full object-contain mx-auto shadow-xs"
+                />
+              </div>
+
+              {/* Informações detalhadas do caso */}
+              <div className="space-y-3">
+                <p className="text-xs uppercase tracking-widest text-[#82622f] font-semibold">
+                  Objetivo e Abordagem Clínica
+                </p>
+                <p className="text-base text-[#2d241e] font-light leading-relaxed">
+                  {activeModalCase.description}
+                </p>
+                {activeModalCase.notes && (
+                  <p className="text-sm text-[#4a3e35] font-light leading-relaxed bg-[#faf7f2] p-4 border border-[#ded5c8]">
+                    {activeModalCase.notes}
+                  </p>
+                )}
+                <p className="text-[11px] text-[#615346] italic pt-1">
+                  * Registro fotográfico documentado para fins informativos. Resultados
+                  individuais dependem da anatomia e planejamento clínico individual.
+                </p>
+              </div>
+
+              {/* Ações do modal: Hierarquia clara */}
+              <div className="pt-4 border-t border-[#ded5c8] flex flex-col sm:flex-row items-center justify-between gap-4">
+                <a
+                  href={contatoData.links.geral}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 bg-[#b89660] hover:bg-[#a6834d] text-white text-xs uppercase tracking-widest font-semibold transition-all shadow-sm rounded-lg"
+                >
+                  <span>Conversar sobre este procedimento</span>
+                  <ArrowRight size={14} />
+                </a>
+                <button
+                  type="button"
+                  onClick={() => setActiveModalCase(null)}
+                  className="w-full sm:w-auto px-4 py-2.5 text-xs text-[#5c4e42] hover:text-[#2d241e] cursor-pointer"
+                >
+                  Fechar exame
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

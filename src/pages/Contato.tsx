@@ -1,6 +1,6 @@
 import { contatoData, entidade } from "../data/siteData";
 import { Breadcrumbs } from "../components/Breadcrumbs";
-import { Phone, Instagram, MapPin, ArrowRight, ShieldCheck } from "lucide-react";
+import { Phone, Instagram, MapPin, ArrowRight, CheckCircle2 } from "lucide-react";
 
 export function Contato() {
   return (
@@ -8,114 +8,145 @@ export function Contato() {
       <div className="max-w-[78rem] mx-auto px-5 sm:px-8 pt-4 pb-16 sm:pb-24">
         <Breadcrumbs items={[{ label: "Contato e Localização" }]} />
 
-        {/* Cabeçalho */}
-        <div className="max-w-3xl pt-6 sm:pt-10 mb-12 sm:mb-16">
-          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#f7f2ea] text-[#977643] text-xs font-semibold uppercase tracking-wider mb-3 border border-[#b89660]/30">
-            <span>Canais Diretos</span>
-          </div>
-          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif-editorial font-normal tracking-tight text-[#2d241e] leading-tight mb-6">
-            Vamos conversar sobre sua avaliação?
+        {/* 1. CABEÇALHO EDITORIAL ABERTO */}
+        <section className="pt-6 sm:pt-10 mb-12 sm:mb-16 max-w-3xl">
+          <span className="text-xs uppercase tracking-widest text-[#82622f] font-semibold block mb-3">
+            Atendimento Privativo em Brasília
+          </span>
+          <h1 className="text-3xl sm:text-4xl lg:text-5xl font-serif-editorial font-normal tracking-tight text-[#2d241e] leading-[1.18] mb-6">
+            Vamos conversar sobre a sua avaliação?
           </h1>
-          <p className="text-base sm:text-lg text-[#6b5d50] leading-relaxed font-light">
-            Entre em contato para apresentar seu interesse, consultar a
-            disponibilidade de horários e receber orientações detalhadas sobre o
-            atendimento presencial.
+          <p className="text-base sm:text-lg text-[#4a3e35] leading-relaxed font-light">
+            O canal direto no WhatsApp está à disposição para esclarecer dúvidas preliminares, verificar a disponibilidade de datas e fornecer as orientações detalhadas de chegada ao consultório no Águas Claras Shopping.
           </p>
-        </div>
+        </section>
 
-        {/* Layout de Contato */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
-          {/* Card WhatsApp Principal (5 colunas) */}
-          <div className="lg:col-span-5 bg-[#ffffff] border border-[#e0d8ce] rounded-3xl p-8 sm:p-10 shadow-lg space-y-6">
-            <span className="text-xs uppercase tracking-widest text-[#977643] font-semibold block">
-              Atendimento no WhatsApp
-            </span>
-
-            <p className="text-sm text-[#6b5d50] leading-relaxed">
-              Inicie uma conversa direta para consultar horários e tirar dúvidas:
-            </p>
-
-            <a
-              href={contatoData.links.geral}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-white bg-[#b89660] hover:bg-[#977643] rounded-xl shadow-md transition-all transform hover:-translate-y-0.5 active:translate-y-0 min-h-[50px]"
-            >
-              <span>Falar pelo WhatsApp</span>
-              <ArrowRight size={17} />
-            </a>
-
-            <div className="pt-6 border-t border-[#f2eee8] space-y-4 text-sm">
-              <div className="flex items-center justify-between p-3 rounded-xl bg-[#faf8f5] border border-[#e0d8ce]">
-                <span className="text-[#6b5d50] flex items-center gap-2">
-                  <Phone size={15} className="text-[#b89660]" />
-                  Telefone:
+        {/* 2. COMPOSIÇÃO EDITORIAL ABERTA: TEXTO & ORIENTAÇÕES DE UM LADO, AÇÕES DO OUTRO */}
+        <section className="pt-8 border-t border-[#ded5c7]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+            {/* Lado Esquerdo: Localização, Orientações de Chegada Confirmadas (7 cols) */}
+            <div className="lg:col-span-7 space-y-8">
+              <div className="space-y-4">
+                <span className="text-xs uppercase tracking-widest text-[#82622f] font-semibold block">
+                  Endereço Confirmado
                 </span>
-                <a
-                  href="tel:+5561996749336"
-                  className="font-semibold text-[#2d241e] hover:text-[#b89660]"
-                >
-                  {contatoData.whatsapp.display}
-                </a>
+                <h2 className="text-2xl sm:text-3xl font-serif-editorial font-normal text-[#2d241e]">
+                  Águas Claras Shopping
+                </h2>
+                <div className="text-base sm:text-lg text-[#2d241e] space-y-1 font-light">
+                  <p className="font-normal text-[#2d241e]">Av. das Araucárias, 1835</p>
+                  <p className="font-semibold text-[#82622f]">5º andar · Sala 566</p>
+                  <p>Águas Claras · Brasília – DF</p>
+                  <p className="text-sm text-[#615346]">CEP: 71936-250</p>
+                </div>
               </div>
 
-              <div className="flex items-center justify-between p-3 rounded-xl bg-[#faf8f5] border border-[#e0d8ce]">
-                <span className="text-[#6b5d50] flex items-center gap-2">
-                  <Instagram size={15} className="text-[#b89660]" />
-                  Instagram:
-                </span>
+              {/* Orientações de Chegada Confirmadas */}
+              <div className="border-t border-[#ded5c7] pt-6 space-y-4">
+                <h3 className="text-lg font-serif-editorial font-medium text-[#2d241e]">
+                  Orientações para o dia do atendimento
+                </h3>
+                <div className="space-y-3 text-sm text-[#4a3e35] font-light leading-relaxed">
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 size={16} className="text-[#82622f] shrink-0 mt-0.5" />
+                    <span>
+                      <strong>Agendamento Prévio:</strong> O atendimento ocorre com hora marcada para assegurar dedicação e privacidade sem sala de espera cheia.
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 size={16} className="text-[#82622f] shrink-0 mt-0.5" />
+                    <span>
+                      <strong>Estacionamento:</strong> O shopping possui vagas cobertas com acesso fácil por elevador até a torre de consultórios.
+                    </span>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <CheckCircle2 size={16} className="text-[#82622f] shrink-0 mt-0.5" />
+                    <span>
+                      <strong>Localização no Prédio:</strong> Dirija-se aos elevadores e suba ao 5º andar, sala 566.
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              {/* Informações de Contato Telefônico e Redes */}
+              <div className="border-t border-[#ded5c7] pt-6 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                <div className="p-4 bg-[#f1ebe1] border border-[#ded5c8] space-y-1">
+                  <span className="text-xs uppercase tracking-wider text-[#82622f] font-semibold flex items-center gap-1.5">
+                    <Phone size={13} />
+                    WhatsApp / Telefone
+                  </span>
+                  <a
+                    href={`tel:${contatoData.whatsapp.e164}`}
+                    className="block text-base font-semibold text-[#2d241e] hover:text-[#82622f] transition-colors"
+                  >
+                    {contatoData.whatsapp.display}
+                  </a>
+                </div>
+
+                <div className="p-4 bg-[#f1ebe1] border border-[#ded5c8] space-y-1">
+                  <span className="text-xs uppercase tracking-wider text-[#82622f] font-semibold flex items-center gap-1.5">
+                    <Instagram size={13} />
+                    Instagram Profissional
+                  </span>
+                  <a
+                    href={entidade.instagram}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="block text-base font-semibold text-[#2d241e] hover:text-[#82622f] transition-colors"
+                  >
+                    @dravaniamedeiros
+                  </a>
+                </div>
+              </div>
+            </div>
+
+            {/* Lado Direito: Ações Principais e Mapa (5 cols) */}
+            <div className="lg:col-span-5 space-y-6">
+              <div className="bg-[#2e241d] text-[#faf6f0] p-8 sm:p-10 border border-[#483b30] space-y-6">
+                <div className="space-y-2">
+                  <span className="text-xs uppercase tracking-widest text-[#d4ba90] font-semibold block">
+                    Canal Principal
+                  </span>
+                  <h3 className="text-2xl font-serif-editorial font-normal text-[#faf6f0]">
+                    Inicie sua conversa
+                  </h3>
+                  <p className="text-sm text-[#ded4c8] leading-relaxed font-light">
+                    Envie uma mensagem para verificar datas disponíveis e agendar sua avaliação presencial.
+                  </p>
+                </div>
+
                 <a
-                  href={entidade.instagram}
+                  href={contatoData.links.geral}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="font-semibold text-[#2d241e] hover:text-[#b89660]"
+                  className="w-full inline-flex items-center justify-center gap-2 px-8 py-4 text-base font-semibold text-white bg-[#b89660] hover:bg-[#a6834d] rounded-xl shadow-sm transition-all focus-visible:outline-none min-h-[50px]"
                 >
-                  @dravaniamedeiros
+                  <span>Conversar no WhatsApp</span>
+                  <ArrowRight size={17} />
                 </a>
+
+                <a
+                  href={contatoData.mapsSearchUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-full inline-flex items-center justify-center gap-2 px-7 py-3.5 text-sm font-semibold text-[#faf6f0] bg-[#3a2f26] border border-[#5a483a] hover:bg-[#483b30] rounded-xl transition-colors min-h-[46px]"
+                >
+                  <MapPin size={15} className="text-[#d4ba90]" />
+                  <span>Traçar rota no Google Maps</span>
+                </a>
+              </div>
+
+              <div className="p-6 bg-[#ede6dc] border border-[#ded5c8] text-xs text-[#5c4e42] leading-relaxed font-light">
+                <p className="font-serif-editorial text-sm text-[#2d241e] mb-1 font-normal">
+                  Atendimento Responsável
+                </p>
+                <p>
+                  As consultas são individuais e exclusivas. Para alterações de horário, solicitamos aviso prévio pelo WhatsApp para remanejamento de agenda.
+                </p>
               </div>
             </div>
           </div>
-
-          {/* Endereço e Localização (7 colunas) */}
-          <div className="lg:col-span-7 bg-[#ffffff] border border-[#e0d8ce] rounded-3xl p-8 sm:p-10 shadow-lg space-y-6">
-            <div>
-              <span className="text-xs uppercase tracking-widest text-[#977643] font-semibold block mb-2">
-                Local de Atendimento
-              </span>
-              <h2 className="text-2xl sm:text-3xl font-serif-editorial font-normal text-[#2d241e]">
-                Águas Claras Shopping
-              </h2>
-            </div>
-
-            <div className="text-base sm:text-lg text-[#2d241e] space-y-1.5 font-light">
-              <p className="font-normal text-[#2d241e]">
-                Av. das Araucárias, 1835
-              </p>
-              <p className="font-semibold text-[#977643]">
-                5º andar · Sala 566
-              </p>
-              <p>Águas Claras · Brasília/DF</p>
-              <p className="text-sm text-[#6b5d50]">CEP 71936-250</p>
-            </div>
-
-            <p className="text-sm text-[#6b5d50] leading-relaxed pt-3 border-t border-[#f2eee8]">
-              Antes da visita, confirme a disponibilidade e as orientações de
-              chegada pelo canal de WhatsApp.
-            </p>
-
-            <div className="pt-2">
-              <a
-                href={contatoData.mapsSearchUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-6 py-3.5 text-sm font-semibold text-[#2d241e] bg-[#f7f2ea] border border-[#b89660]/40 rounded-xl hover:bg-[#b89660] hover:text-white transition-all min-h-[44px]"
-              >
-                <MapPin size={16} />
-                <span>Abrir rota no Google Maps</span>
-              </a>
-            </div>
-          </div>
-        </div>
+        </section>
       </div>
     </div>
   );

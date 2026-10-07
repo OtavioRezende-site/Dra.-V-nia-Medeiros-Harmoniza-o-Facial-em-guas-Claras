@@ -70,6 +70,28 @@ function resolveCurrentRoute(): string {
   return normalizePath(pathname);
 }
 
+function scrollToTarget(hash?: string) {
+  if (hash) {
+    const elementId = hash.replace(/^#/, "");
+    // Try immediate scroll or wait a tick for DOM to mount
+    const el = document.getElementById(elementId);
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth" });
+      return;
+    }
+    setTimeout(() => {
+      const delayedEl = document.getElementById(elementId);
+      if (delayedEl) {
+        delayedEl.scrollIntoView({ behavior: "smooth" });
+      } else {
+        window.scrollTo(0, 0);
+      }
+    }, 100);
+  } else {
+    window.scrollTo(0, 0);
+  }
+}
+
 export default function App() {
   const [currentPath, setCurrentPath] = useState<string>(resolveCurrentRoute);
 
@@ -77,11 +99,24 @@ export default function App() {
     const handleLocationChange = () => {
       const resolved = resolveCurrentRoute();
       setCurrentPath(resolved);
-      window.scrollTo(0, 0);
+      const hash = window.location.hash;
+      // Only scroll to hash if it's an anchor (not a route hash like #/sobre/)
+      if (hash && !hash.startsWith("#/")) {
+        scrollToTarget(hash);
+      } else {
+        window.scrollTo(0, 0);
+      }
     };
 
     window.addEventListener("popstate", handleLocationChange);
     window.addEventListener("hashchange", handleLocationChange);
+
+    // Initial check for anchor
+    const initialHash = window.location.hash;
+    if (initialHash && !initialHash.startsWith("#/")) {
+      scrollToTarget(initialHash);
+    }
+
     return () => {
       window.removeEventListener("popstate", handleLocationChange);
       window.removeEventListener("hashchange", handleLocationChange);
@@ -89,17 +124,26 @@ export default function App() {
   }, []);
 
   const navigate = (path: string) => {
-    const normalized = normalizePath(path);
-    if (normalized !== currentPath) {
-      const base = getBasePath();
-      const targetUrl = base ? `${base}${path}` : path;
-      try {
-        window.history.pushState({}, "", targetUrl);
-      } catch {
-        // Fallback for restricted environments
-        window.location.hash = path;
-      }
-      setCurrentPath(normalized);
+    // Check if path has a hash (e.g., /#jornada-clinica or /perguntas-frequentes/#preparacao)
+    const [pathnameOnly, targetHash] = path.split("#");
+    const normalized = normalizePath(pathnameOnly);
+    const hashPart = targetHash ? `#${targetHash}` : "";
+
+    const base = getBasePath();
+    const targetUrl = base ? `${base}${normalized}${hashPart}` : `${normalized}${hashPart}`;
+
+    try {
+      window.history.pushState({}, "", targetUrl);
+    } catch {
+      // Fallback for restricted environments
+      window.location.hash = hashPart ? `${normalized}${hashPart}` : normalized;
+    }
+
+    setCurrentPath(normalized);
+
+    if (targetHash) {
+      scrollToTarget(targetHash);
+    } else {
       window.scrollTo(0, 0);
     }
   };
@@ -152,7 +196,7 @@ export default function App() {
       <Footer navigate={navigate} />
 
       {/* Persistent WhatsApp Floating Button */}
-      <WhatsAppFloat />
+      <WhatsAppFloat currentPath={currentPath} />
     </div>
   );
 }

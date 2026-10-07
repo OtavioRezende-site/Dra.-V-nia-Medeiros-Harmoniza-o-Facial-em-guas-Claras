@@ -1,10 +1,11 @@
 import { useState } from "react";
-import { Layers, Shield, Sparkles, Check, ArrowRight } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 interface LayerInfo {
   id: string;
   level: string;
   name: string;
+  shortName: string;
   anatomicalFocus: string;
   howWeAct: string;
   technique: string;
@@ -13,8 +14,10 @@ interface LayerInfo {
 
 export function FacialLayersExplainer({
   onSelectTreatment,
+  theme = "deep",
 }: {
   onSelectTreatment?: (path: string) => void;
+  theme?: "light" | "deep";
 }) {
   const [selectedLayer, setSelectedLayer] = useState<string>("sustentacao");
 
@@ -22,6 +25,7 @@ export function FacialLayersExplainer({
     {
       id: "sustentacao",
       level: "Nível 01",
+      shortName: "Sustentação & Reposicionamento",
       name: "Sustentação & Reposicionamento Tecidual",
       anatomicalFocus: "Sistema Músculo-Aponeurótico (SMAS) e Ligamentos de Retenção",
       howWeAct:
@@ -33,6 +37,7 @@ export function FacialLayersExplainer({
     {
       id: "contorno",
       level: "Nível 02",
+      shortName: "Definição & Ângulo Cervical",
       name: "Definição Mandibular & Ângulo Cervical",
       anatomicalFocus: "Região Submentual, Borda Mandibular e Platisma",
       howWeAct:
@@ -44,6 +49,7 @@ export function FacialLayersExplainer({
     {
       id: "volume",
       level: "Nível 03",
+      shortName: "Proporções & Estruturação Óssea",
       name: "Proporções Áureas & Estruturação Óssea",
       anatomicalFocus: "Terço Médio (Maçãs do Rosto) e Terço Inferior (Mento e Mandíbula)",
       howWeAct:
@@ -55,25 +61,43 @@ export function FacialLayersExplainer({
   ];
 
   const current = layers.find((l) => l.id === selectedLayer) || layers[0];
+  const isDeep = theme === "deep";
 
   return (
-    <div className="w-full bg-[#ffffff] rounded-3xl border border-[#e0d8ce] p-8 sm:p-12 shadow-lg">
-      <div className="max-w-3xl mb-8">
-        <span className="text-xs uppercase tracking-widest text-[#977643] font-semibold block mb-2">
+    <div className="w-full">
+      {/* Cabeçalho da Seção */}
+      <div className="max-w-3xl mb-12">
+        <span
+          className={`text-xs uppercase tracking-widest font-semibold block mb-3 ${
+            isDeep ? "text-[#d4ba90]" : "text-[#82622f]"
+          }`}
+        >
           Didática Anatômica
         </span>
-        <h3 className="text-2xl sm:text-3xl lg:text-4xl font-serif-editorial font-normal text-[#2d241e]">
-          Por que não aplicamos &ldquo;fórmulas prontas&rdquo;?
-        </h3>
-        <p className="text-sm sm:text-base text-[#6b5d50] leading-relaxed mt-2 font-light">
+        <h2
+          className={`text-3xl sm:text-4xl lg:text-5xl font-serif-editorial font-normal leading-tight ${
+            isDeep ? "text-[#faf6f0]" : "text-[#2d241e]"
+          }`}
+        >
+          Por que não aplicamos fórmulas prontas?
+        </h2>
+        <p
+          className={`text-base sm:text-lg leading-relaxed font-light mt-4 ${
+            isDeep ? "text-[#ded4c8]" : "text-[#4a3e35]"
+          }`}
+        >
           A harmonização bem-sucedida atua exatamente na camada anatômica que
-          precisa de suporte. Clique nos níveis abaixo para entender como cada
-          técnica se integra com lógica e propósito:
+          precisa de suporte. Cada plano da face demanda uma técnica com propósito
+          biofísico e estrutural claro.
         </p>
       </div>
 
-      {/* Abas dos Níveis Anatômicos */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-8">
+      {/* Navegação Discreta das Camadas (Sem caixas ou molduras) */}
+      <div
+        className={`border-b flex flex-wrap gap-2 sm:gap-8 mb-10 ${
+          isDeep ? "border-[#4f4237]" : "border-[#ded5c7]"
+        }`}
+      >
         {layers.map((layer) => {
           const isSelected = layer.id === selectedLayer;
           return (
@@ -81,73 +105,152 @@ export function FacialLayersExplainer({
               key={layer.id}
               type="button"
               onClick={() => setSelectedLayer(layer.id)}
-              className={`p-4 rounded-xl text-left border transition-all cursor-pointer ${
+              className={`pb-4 text-left transition-all cursor-pointer relative focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-[#c5a36c] ${
                 isSelected
-                  ? "bg-[#faf8f5] border-[#b89660] shadow-sm ring-1 ring-[#b89660]"
-                  : "bg-white border-[#e0d8ce] hover:border-[#b89660]/40"
+                  ? isDeep
+                    ? "text-[#faf6f0]"
+                    : "text-[#2d241e]"
+                  : isDeep
+                  ? "text-[#b8a896] hover:text-[#faf6f0]"
+                  : "text-[#695b4e] hover:text-[#2d241e]"
               }`}
             >
-              <span className="text-[11px] font-mono font-bold text-[#b89660] block">
-                {layer.level}
-              </span>
-              <p
-                className={`text-sm font-semibold mt-1 ${
-                  isSelected ? "text-[#2d241e]" : "text-[#6b5d50]"
-                }`}
-              >
-                {layer.name}
-              </p>
-              <p className="text-xs text-[#977643] mt-1 font-medium">
-                → {layer.technique}
-              </p>
+              <div className="flex items-center gap-2">
+                <span
+                  className={`text-xs font-mono font-medium ${
+                    isSelected
+                      ? isDeep
+                        ? "text-[#d4ba90]"
+                        : "text-[#82622f]"
+                      : isDeep
+                      ? "text-[#9e8f80]"
+                      : "text-[#8a7b6e]"
+                  }`}
+                >
+                  {layer.level}
+                </span>
+                <span
+                  aria-hidden="true"
+                  className={isDeep ? "text-[#5e5043]" : "text-[#c7bdb0]"}
+                >
+                  ·
+                </span>
+                <span
+                  className={`text-sm sm:text-base font-serif-editorial ${
+                    isSelected ? "font-medium" : "font-normal"
+                  }`}
+                >
+                  {layer.shortName}
+                </span>
+              </div>
+
+              {/* Linha indicadora discreta */}
+              {isSelected && (
+                <span
+                  className={`absolute bottom-0 left-0 right-0 h-0.5 ${
+                    isDeep ? "bg-[#c5a36c]" : "bg-[#82622f]"
+                  }`}
+                />
+              )}
             </button>
           );
         })}
       </div>
 
-      {/* Painel Explicativo da Camada Selecionada */}
-      <div className="bg-[#f2eee8] rounded-2xl p-6 sm:p-8 border border-[#e0d8ce] grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-        <div className="lg:col-span-8 space-y-4">
-          <div className="flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-[#977643]">
-            <Layers size={16} />
-            <span>Estrutura Alvo: {current.anatomicalFocus}</span>
+      {/* Área Aberta com o Conteúdo Correspondente */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-start">
+        {/* Coluna Principal: Análise Anatômica */}
+        <div className="lg:col-span-8 space-y-6">
+          <div>
+            <span
+              className={`text-xs uppercase tracking-widest font-semibold block mb-2 ${
+                isDeep ? "text-[#d4ba90]" : "text-[#82622f]"
+              }`}
+            >
+              Estrutura Alvo: {current.anatomicalFocus}
+            </span>
+            <h3
+              className={`text-2xl sm:text-3xl font-serif-editorial font-normal ${
+                isDeep ? "text-[#faf6f0]" : "text-[#2d241e]"
+              }`}
+            >
+              {current.name}
+            </h3>
           </div>
 
-          <h4 className="text-xl sm:text-2xl font-serif-editorial text-[#2d241e]">
-            {current.name}
-          </h4>
-
-          <p className="text-sm sm:text-base text-[#6b5d50] leading-relaxed">
+          <p
+            className={`text-base sm:text-lg leading-relaxed font-light ${
+              isDeep ? "text-[#ded4c8]" : "text-[#4a3e35]"
+            }`}
+          >
             {current.howWeAct}
           </p>
 
-          <div className="pt-2 flex items-start gap-2.5 text-xs text-[#2d241e]">
-            <Check size={16} className="text-[#b89660] shrink-0 mt-0.5" />
-            <span>
-              <strong>Sensação do resultado:</strong> {current.resultFeeling}
-            </span>
+          <div
+            className={`pt-4 border-t ${
+              isDeep ? "border-[#4f4237]" : "border-[#ded5c7]"
+            }`}
+          >
+            <p
+              className={`text-xs uppercase tracking-widest font-bold mb-1.5 ${
+                isDeep ? "text-[#d4ba90]" : "text-[#82622f]"
+              }`}
+            >
+              Sensação do resultado
+            </p>
+            <p
+              className={`text-base font-serif italic leading-relaxed ${
+                isDeep ? "text-[#f5ede3]" : "text-[#2d241e]"
+              }`}
+            >
+              &ldquo;{current.resultFeeling}&rdquo;
+            </p>
           </div>
         </div>
 
-        <div className="lg:col-span-4 bg-white p-6 rounded-xl border border-[#e0d8ce] space-y-4">
-          <span className="text-xs uppercase tracking-wider text-[#977643] font-bold block">
+        {/* Coluna Lateral: Resumo da Técnica Aplicada */}
+        <div
+          className={`lg:col-span-4 border-t lg:border-t-0 lg:border-l pt-8 lg:pt-0 lg:pl-10 space-y-5 ${
+            isDeep ? "border-[#4f4237]" : "border-[#ded5c7]"
+          }`}
+        >
+          <span
+            className={`text-xs uppercase tracking-widest font-bold block ${
+              isDeep ? "text-[#d4ba90]" : "text-[#82622f]"
+            }`}
+          >
             Técnica Aplicada
           </span>
-          <p className="text-lg font-serif-editorial text-[#2d241e]">
+          <p
+            className={`text-xl sm:text-2xl font-serif-editorial ${
+              isDeep ? "text-[#faf6f0]" : "text-[#2d241e]"
+            }`}
+          >
             {current.technique}
           </p>
-          <p className="text-xs text-[#6b5d50] leading-relaxed">
-            Planejada com dosagens individualizadas e materiais nobres de alta
-            pureza biológica.
+          <p
+            className={`text-sm leading-relaxed font-light ${
+              isDeep ? "text-[#cbbdaf]" : "text-[#5c4f43]"
+            }`}
+          >
+            Planejada com dosagens individualizadas e biomateriais de comprovada
+            biocompatibilidade e registro na Anvisa, em sintonia com a anatomia da sua face.
           </p>
           {onSelectTreatment && (
             <button
               type="button"
               onClick={() => onSelectTreatment("/tratamentos/")}
-              className="text-xs font-semibold text-[#b89660] hover:text-[#977643] flex items-center gap-1 cursor-pointer pt-2"
+              className={`inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider transition-colors cursor-pointer pt-2 group focus-visible:outline-none ${
+                isDeep
+                  ? "text-[#d4ba90] hover:text-[#faf6f0]"
+                  : "text-[#82622f] hover:text-[#2d241e]"
+              }`}
             >
-              <span>Ver detalhes na visão geral</span>
-              <ArrowRight size={13} />
+              <span>Conhecer todos os tratamentos</span>
+              <ArrowRight
+                size={14}
+                className="group-hover:translate-x-1 transition-transform"
+              />
             </button>
           )}
         </div>

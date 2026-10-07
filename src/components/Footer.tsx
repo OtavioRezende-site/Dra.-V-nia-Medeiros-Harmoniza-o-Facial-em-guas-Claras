@@ -25,7 +25,7 @@ export function Footer({ navigate }: FooterProps) {
               Harmonização Orofacial · Brasília/DF
             </p>
             <p className="text-sm text-[#d6c9bd] leading-relaxed max-w-md font-light">
-              Atendimento acolhedor, sofisticado e humanizado, focado na
+              Atendimento acolhedor, transparente e humanizado, focado na
               valorização da sua identidade única por meio de técnicas avançadas
               e seguras de harmonização facial.
             </p>
