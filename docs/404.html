@@ -12,11 +12,24 @@
         var search = window.location.search || '';
         var hash = window.location.hash || '';
 
+        var knownRoutes = [
+          'sobre',
+          'tratamentos',
+          'experiencia-de-atendimento',
+          'perguntas-frequentes',
+          'contato',
+          'privacidade',
+          'resultados'
+        ];
+
         // Check if on username.github.io/repo-name
-        var isGithubProjectSite = host.endsWith('github.io') && segments.length > 0;
+        var isGithubProjectSite = host.endsWith('github.io') && segments.length > 0 && knownRoutes.indexOf(segments[0]) === -1 && segments[0] !== 'docs';
         
         var repo = isGithubProjectSite ? '/' + segments[0] : '';
         var routeSegments = isGithubProjectSite ? segments.slice(1) : segments;
+        if (routeSegments.length > 0 && routeSegments[0] === 'docs') {
+          routeSegments = routeSegments.slice(1);
+        }
         var route = routeSegments.join('/');
 
         var cleanRoute = route ? '/' + route.replace(/^\/+|\/+$/g, '') + '/' : '/';

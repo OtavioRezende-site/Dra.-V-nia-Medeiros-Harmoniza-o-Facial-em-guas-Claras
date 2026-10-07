@@ -26,6 +26,12 @@ export function getBasePath(): string {
     const firstSegment = segments[0];
     // If the first segment is not one of our known routes and not index.html, it's the repo/subfolder name
     if (!KNOWN_ROUTES.includes(firstSegment) && firstSegment !== "index.html") {
+      if (firstSegment === "docs") {
+        return "/docs";
+      }
+      if (segments.length > 1 && segments[1] === "docs") {
+        return `/${segments[0]}/docs`;
+      }
       return `/${segments[0]}`;
     }
   }
